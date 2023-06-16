@@ -2,6 +2,8 @@
 
 require_once "../core/conexao.php";
 require_once "../core/validations/validData.class.php";
+require_once "../app/model/coursesModel.class.php";
+require_once "../app/model/classesModel.class.php";
 
 $conexao = Conexao::conectar();
 
@@ -27,4 +29,13 @@ $testeEmail = ValidData::isValidCPF($cpf);
 
 $password = 'Teste999!a';
 $testePassword = ValidData::isValidPassword($password);
-var_dump($testePassword);
+
+//// CLASSES
+
+$courses = CoursesModel::getAllCourses($conexao);
+$classes = ClassesModel::filterByAge($conexao, 1, 99);
+
+
+ while($row = $classes->fetch(PDO::FETCH_OBJ)) {
+   print_r($row);
+ }
