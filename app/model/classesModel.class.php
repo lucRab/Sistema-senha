@@ -1,27 +1,46 @@
 <?php 
+  require_once "../database/sqlClasses.php";
 
   class ClassesModel {
 
-    private static $idadeMinima = 1;
-    private static $idadeMaxima = 99;
-    public function __construct(){}
+    private static $shift = null;
+    private static $age = null;
+    private static $course = null;
 
-    public function filterClasses($conexao) {
-     
+    public function __construct($courseValue) {
+      self::$course = $courseValue;
     }
 
-    public static function filterByAge($conexao, $final, $inicial) {
-      $final && self::$idadeMaxima = $final;
-      $inicial && self::$idadeMinima = $inicial;
-      $idade = 10;
+    public static function filterClasses($conexao) {
+      if (!self::$age) {
+        return 'Digite sua idade';
+      } else if (self::$course) {
+        return 'Escolha um curso';
+      }
+      
+      $conditions = ' AND :idade BETWEEN idade_minima AND idade_maxima'; 
+      
+      if (!empty($shift)) {
+        $conditions .= ' AND turno = :turno';
+        $params['turno'] = self::$shift;
+      }
+      
+      $params = ['idade' => self::$age];
+      
+      $sql = SQL_FILTER_CLASSES($conditions);
+      $select = $conexao->prepare($sql);
+      $select->execute($params);
+      while($row = $select->fetch(PDO::FETCH_OBJ)) {
+        print_r($row);
+      }
+    }
 
-      $select = $conexao->prepare('SELECT * FROM turma WHERE :idade
-      BETWEEN :idade_minima 
-      AND :idade_maxima');
+    public static function filterByShift($shiftValue) {
+      self::$shift = $shiftValue;
+    }
 
-      if ($select->execute(['idade' => $idade, 'idade_minima' => self::$idadeMinima, 'idade_maxima' => self::$idadeMaxima])) {
-        return $select;
-      }; 
+    public static function filterByAge($ageValue) {
+      self::$age = $ageValue;
     }
 
   }
