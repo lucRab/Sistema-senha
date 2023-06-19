@@ -1,27 +1,35 @@
-<?php 
+<?php
 
-  class ClassesModel {
+namespace app\model;
 
-    private static $idadeMinima = 1;
-    private static $idadeMaxima = 99;
-    public function __construct(){}
+require_once "../core/validations/validConnection.class.php";
 
-    public function filterClasses($conexao) {
-     
+class ClassesModel
+{
+    public function __construct()
+    {
     }
 
-    public static function filterByAge($conexao, $final, $inicial) {
-      $final && self::$idadeMaxima = $final;
-      $inicial && self::$idadeMinima = $inicial;
-      $idade = 10;
+    public static function filterClassesModel($conexao, $infosClass)
+    {
+        $course = $infosClass->course;
+        $age = $infosClass->age;
+        $shift = $infosClass->shift;
 
-      $select = $conexao->prepare('SELECT * FROM turma WHERE :idade
-      BETWEEN :idade_minima 
-      AND :idade_maxima');
+        $conditions = ' AND :idade BETWEEN idade_minima AND idade_maxima';
 
-      if ($select->execute(['idade' => $idade, 'idade_minima' => self::$idadeMinima, 'idade_maxima' => self::$idadeMaxima])) {
-        return $select;
-      }; 
+        $params = ['idade' => $age];
+
+        if (!empty($shift)) {
+            $conditions .= ' AND turno = :turno';
+            $params['turno'] = $shift;
+        }
+
+        $sql = SQL_FILTER_CLASSES($conditions);
+        $teste = \validConnection::isValidConnection($conexao, $sql, $params);
+        while($row = $teste->fetch(\PDO::FETCH_OBJ)) {
+            print_r($row);
+        }
     }
 
-  }
+}
