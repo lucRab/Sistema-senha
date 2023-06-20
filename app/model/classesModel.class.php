@@ -12,7 +12,7 @@ class ClassesModel
 
     public static function filterClassesModel($conexao, $infosClass)
     {
-        $course = $infosClass->course;
+        $course = $infosClass->courseName;
         $age = $infosClass->age;
         $shift = $infosClass->shift;
 
@@ -25,11 +25,8 @@ class ClassesModel
             $params['turno'] = $shift;
         }
 
-        $sql = SQL_FILTER_CLASSES($conditions);
+        $sql = SQL_FILTER_CLASSES($course, $conditions);
         $teste = \validConnection::isValidConnection($conexao, $sql, $params);
-        while($row = $teste->fetch(\PDO::FETCH_OBJ)) {
-            print_r($row);
-        }
     }
 
 }
