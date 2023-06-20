@@ -1,5 +1,5 @@
 <?php
-namespace App\Model;
+namespace app\model;
 /**
  * Classe para conectar usuario com o banco de dados
  * @author Lucas Rabelo <email> 

@@ -1,5 +1,5 @@
 <?php
-namespace App\Model;
+namespace app\model;
 require_once("../../core/conexao.php");
 class PasswordModel {
 

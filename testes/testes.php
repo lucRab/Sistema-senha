@@ -4,6 +4,7 @@ require_once "../core/conexao.php";
 require_once "../core/validations/validData.class.php";
 require_once "../app/model/coursesModel.class.php";
 require_once "../app/model/classesModel.class.php";
+require_once "../app/controller/classesController.class.php";
 require_once "../database/sqlClasses.php";
 
 $conexao = Conexao::conectar();
@@ -33,12 +34,7 @@ $testePassword = ValidData::isValidPassword($password);
 
 //// CLASSES
 
-$courses = CoursesModel::getAllCourses($conexao);
-
-$classes = ClassesModel::filterByAge(10);
-
-$teste = ClassesModel::filterClasses($conexao);
-
- while($row = $teste->fetch(PDO::FETCH_OBJ)) {
-   print_r($row);
- }
+$courses = \app\model\CoursesModel::getAllCourses($conexao);
+$coe = \app\controller\ClassesController::filterByAge(10);
+$teste = \app\controller\ClassesController::filterClassesController($conexao);
+var_dump($teste);

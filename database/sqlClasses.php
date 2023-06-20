@@ -1,4 +1,12 @@
 <?php
+  /* 
+    Retorna as turmas em ordem:
+    - Com senhas disponiveis
+    - De 2023
+    - Turmas abertas
+    - Condições de filtragem (idade e turno)
+    - Retorna a primeira turma com o menor número de senhas
+  */
   function SQL_FILTER_CLASSES($conditions = null) {
     return "SELECT t.cod_turma, m.nome_modulo, c.nome_curso, t.nome_turma, COUNT(1) AS num_senhas , s.validade FROM modulo m
     INNER JOIN turma t on m.cod_modulo = t.cod_modulo
@@ -11,5 +19,6 @@
     {$conditions}
     GROUP BY t.cod_turma
     ORDER BY num_senhas ASC
+    LIMIT 1
   ";
   }
