@@ -9,15 +9,14 @@ class CoursesModel
     }
 
 
-    public static function getAllCourses($conexao)
+    public static function getAllCoursesModel($conexao)
     {
-        $select = $conexao->prepare("SELECT * FROM curso");
-        if ($select->execute()) {
-            return true;
-        }
+        $query = SQL_SELECT_COURSES();
+        $con = \validConnection::isValidConnection($conexao, $query);
+        return $con;
     }
 
-    public static function getDataCourse($course)
+    public static function getDataCourseModel($course)
     {
         $classes = new \app\controller\ClassesController($course);
     }

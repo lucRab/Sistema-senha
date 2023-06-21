@@ -1,5 +1,6 @@
 <?php 
 use app\model\UserModel;
+use app\controller;
 
 require_once "../core/conexao.php";
 require_once "../core/validations/validData.class.php";
@@ -7,6 +8,7 @@ require_once "../app/model/coursesModel.class.php";
 require_once "../app/model/classesModel.class.php";
 require_once "../app/model/userModel.class.php";
 require_once "../app/controller/classesController.class.php";
+require_once "../app/controller/coursesController.class.php";
 require_once "../database/sqlClasses.php";
 
 $conexao = Conexao::conectar();
@@ -55,9 +57,17 @@ $testeEmail = ValidData::isValidCPF($cpf);
 $password = 'Teste999!a';
 $testePassword = ValidData::isValidPassword($password);
 
+/// CURSOS
+
+$cursos = \app\controller\CoursesController::getAllCourses($conexao);
+var_dump($cursos);
+
 //// CLASSES
 
-$courses = \app\model\CoursesModel::getAllCourses($conexao);
 $coe = \app\controller\ClassesController::filterByAge(10);
+$shift = \app\controller\ClassesController::filterByShift('MATUTINO');
+$shift = \app\controller\ClassesController::setCourse('BALLET');
 $teste = \app\controller\ClassesController::filterClassesController($conexao);
-var_dump($teste);
+while($row = $teste->fetch(PDO::FETCH_OBJ)) {
+           print_r($row);
+}

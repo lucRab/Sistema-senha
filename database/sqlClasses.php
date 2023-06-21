@@ -14,7 +14,7 @@
     INNER JOIN senha s on t.cod_turma = s.cod_turma
     AND s.situacao = 'DISPONIVEL'
     AND s.validade BETWEEN '2023-01-01' AND '2023-12-31'
-    AND c.nome_curso = {$courseName}
+    AND c.nome_curso = '{$courseName}'
     WHERE t.situacao = 'ABERTA'
     {$conditions}
     GROUP BY t.cod_turma
@@ -40,4 +40,8 @@
     data_nascimento = :data_nascimento, nome_pai = :nome_pai, nome_mae = :nome_mae, sexo = :sexo,
     cpf = :cpf, telefone_celular = :telefone, email = :email, endereco = :rua,
     numero_endereco = :numero_casa, responsavel_cpf = :responsavel_cpf WHERE cod_aluno = :id";
+  }
+
+  function SQL_SELECT_COURSES(){
+    return "SELECT * FROM curso";
   }
