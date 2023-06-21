@@ -9,7 +9,7 @@ class validConnection
         que precisar executar uma query no banco, evita repetições e fica mais legível
         Exemplo na classe: classesModel.class.php
      */
-    public static function isValidConnection($conexao, $query, $params)
+    public static function isValidConnection($conexao, $query, $params = null)
     {
         try {
             if (gettype($conexao)!== 'string' and get_class($conexao) === 'PDO') {

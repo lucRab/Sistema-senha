@@ -27,6 +27,7 @@ class ClassesModel
 
         $sql = SQL_FILTER_CLASSES($course, $conditions);
         $teste = \validConnection::isValidConnection($conexao, $sql, $params);
+        return $teste;
     }
 
 }

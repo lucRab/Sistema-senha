@@ -8,16 +8,19 @@ class ClassesController
     private static $age = null;
     private static $course = null;
 
-    public function __construct($courseValue)
+    public function __construct()
     {
-        self::$course = $courseValue;
+    }
+
+    public static function setCourse($courseName) {
+        self::$course = $courseName;
     }
 
     public static function filterClassesController($conexao)
     {
         if (!self::$age) {
             return 'Digite sua idade';
-        } elseif (self::$course) {
+        } elseif (!self::$course) {
             return 'Escolha um curso';
         }
 
@@ -25,16 +28,16 @@ class ClassesController
         $infosClass->courseName = self::$course;
         $infosClass->age = self::$age;
         $infosClass->shift = self::$shift;
-
         $dataClass = \app\model\ClassesModel::filterClassesModel($conexao, $infosClass);
+        return $dataClass;
     }
 
-    public static function filterByShift($shiftValue)
+    public static function filterByShift($shiftValue): void
     {
         self::$shift = $shiftValue;
     }
 
-    public static function filterByAge($ageValue)
+    public static function filterByAge($ageValue): void
     {
         self::$age = $ageValue;
     }
