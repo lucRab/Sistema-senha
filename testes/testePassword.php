@@ -1,12 +1,12 @@
 <?php 
-use app\model\PasswordModel;
+use App\model\PasswordModel;
 
 require_once "../core/conexao.php";
 require_once "../core/validations/validData.class.php";
-require_once "../app/model/coursesModel.class.php";
-require_once "../app/model/classesModel.class.php";
-require_once "../app/model/passwordModel.class.php";
-require_once "../app/controller/classesController.class.php";
+require_once "../app/model/CoursesModel.class.php";
+require_once "../app/model/ClassesModel.class.php";
+require_once "../app/model/PasswordModel.class.php";
+require_once "../app/controller/ClassesController.class.php";
 require_once "../database/sqlClasses.php";
 $conexao = Conexao::conectar();
 

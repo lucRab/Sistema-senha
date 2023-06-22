@@ -1,6 +1,6 @@
 <?php 
 
-namespace app\controller;
+namespace App\controller;
 
 class CoursesController {
 
@@ -11,7 +11,7 @@ class CoursesController {
 
     public static function getAllCourses($conexao) 
     {
-        $courses = \app\model\CoursesModel::getAllCoursesModel($conexao);
+        $courses = \App\model\CoursesModel::getAllCoursesModel($conexao);
         return $courses;
     }
 

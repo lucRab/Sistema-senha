@@ -1,14 +1,15 @@
 <?php 
-use app\model\UserModel;
-use app\controller;
+use App\model\UserModel;
+use App\controller;
 
 require_once "../core/conexao.php";
 require_once "../core/validations/validData.class.php";
-require_once "../app/model/coursesModel.class.php";
-require_once "../app/model/classesModel.class.php";
-require_once "../app/model/userModel.class.php";
-require_once "../app/controller/classesController.class.php";
-require_once "../app/controller/coursesController.class.php";
+require_once "../app/model/CoursesModel.php";
+require_once "../app/model/ClassesModel.php";
+require_once "../app/model/UserModel.php";
+require_once "../app/controller/ClassesController.php";
+require_once "../app/controller/CoursesController.php";
+require_once "../app/model/PasswordModel.php";
 require_once "../database/sqlClasses.php";
 
 $conexao = Conexao::conectar();
@@ -59,15 +60,13 @@ $testePassword = ValidData::isValidPassword($password);
 
 /// CURSOS
 
-$cursos = \app\controller\CoursesController::getAllCourses($conexao);
-var_dump($cursos);
+$cursos = \App\controller\CoursesController::getAllCourses($conexao);
 
 //// CLASSES
 
-$coe = \app\controller\ClassesController::filterByAge(10);
-$shift = \app\controller\ClassesController::filterByShift('MATUTINO');
-$shift = \app\controller\ClassesController::setCourse('BALLET');
-$teste = \app\controller\ClassesController::filterClassesController($conexao);
-while($row = $teste->fetch(PDO::FETCH_OBJ)) {
-           print_r($row);
-}
+\App\controller\ClassesController::filterByAge(10);
+\App\controller\ClassesController::filterByShift('MATUTINO');
+\App\controller\ClassesController::setCourse('BALLET');
+
+$teste = \App\controller\ClassesController::filterClassesController($conexao);
+var_dump($teste->fetchAll(\PDO::FETCH_OBJ));

@@ -1,5 +1,5 @@
 <?php
-namespace app\model;
+namespace App\model;
 /**
  * Classe para conectar usuario com o banco de dados
  * @author Lucas Rabelo <email> 
@@ -33,10 +33,10 @@ class UserModel {
      * @param [Object] $data
      * @return array
      */
-    public static function getAllUser($conexao, $data) {
+    public static function getUser($conexao, $data) {
         //recebe os dados e coloca em um array para executar a query
-        $params = array( 'id'=> $data->id);
-        $query = SQL_GET_ALL_USER();
+        $params = array('id' => $data->id);
+        $query = SQL_GET_USER();
         $con = \validConnection::isValidConnection($conexao, $query, $params);
         return $con;
     }
@@ -46,6 +46,7 @@ class UserModel {
      * @param [object] $data
      * @return true
      */
+    
     public static function updateUser($conexao, $data) {
     //Código da função
         //instancia a conexão;

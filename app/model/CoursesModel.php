@@ -1,6 +1,6 @@
 <?php
 
-namespace app\model;
+namespace App\model;
 
 class CoursesModel
 {
@@ -18,7 +18,7 @@ class CoursesModel
 
     public static function getDataCourseModel($course)
     {
-        $classes = new \app\controller\ClassesController($course);
+        $classes = new \App\controller\ClassesController($course);
     }
 
 }

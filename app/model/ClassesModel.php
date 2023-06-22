@@ -1,6 +1,6 @@
 <?php
 
-namespace app\model;
+namespace App\model;
 
 require_once "../core/validations/validConnection.class.php";
 

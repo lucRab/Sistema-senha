@@ -7,7 +7,7 @@ class validConnection
     /**
         Essa função serve para substituir os try/catch toda vez
         que precisar executar uma query no banco, evita repetições e fica mais legível
-        Exemplo na classe: classesModel.class.php
+        Exemplo na classe: ClassesModel.class.php
      */
     public static function isValidConnection($conexao, $query, $params = null)
     {
