@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controller;
+namespace App\controller;
 
 class ClassesController
 {
@@ -28,7 +28,14 @@ class ClassesController
         $infosClass->courseName = self::$course;
         $infosClass->age = self::$age;
         $infosClass->shift = self::$shift;
-        $dataClass = \app\model\ClassesModel::filterClassesModel($conexao, $infosClass);
+        $dataClass = \App\model\ClassesModel::filterClassesModel($conexao, $infosClass);
+
+        if (!empty($dataClass)) {
+            $cod_class = $dataClass->fetchAll(\PDO::FETCH_OBJ);
+            $password = \App\model\PasswordModel::passwordOpen($conexao, $cod_class[0]->cod_turma);
+            return $password;
+        }
+
         return $dataClass;
     }
 
