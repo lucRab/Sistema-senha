@@ -8,7 +8,7 @@
     - Retorna a primeira turma com o menor número de senhas
   */
   function SQL_FILTER_CLASSES($courseName, $conditions = null) {
-    return "SELECT t.cod_turma, m.nome_modulo, c.nome_curso, t.nome_turma, COUNT(1) AS num_senhas , s.validade FROM modulo m
+    return "SELECT t.cod_turma, m.nome_modulo, c.nome_curso, t.nome_turma, COUNT(s.cod_turma) AS num_senhas , s.validade FROM modulo m
     INNER JOIN turma t on m.cod_modulo = t.cod_modulo
     INNER JOIN curso c on m.cod_curso = c.cod_curso
     INNER JOIN senha s on t.cod_turma = s.cod_turma
@@ -31,7 +31,7 @@
     :sexo, :cpf, :telefone_celular, :email, :endereco, :numero_endereco, :responsavel_cpf)";
   }
 
-  function SQL_GET_ALL_USER() {
+  function SQL_GET_USER() {
     return "SELECT * FROM aluno Where cod_aluno = :id";
   }
 
