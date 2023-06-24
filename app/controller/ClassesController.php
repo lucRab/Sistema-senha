@@ -30,13 +30,15 @@ class ClassesController
         $infosClass->shift = self::$shift;
         $dataClass = \App\model\ClassesModel::filterClassesModel($conexao, $infosClass);
 
-        if (!empty($dataClass)) {
-            $cod_class = $dataClass->fetchAll(\PDO::FETCH_OBJ);
-            $password = \App\model\PasswordModel::passwordOpen($conexao, $cod_class[0]->cod_turma);
-            return $password;
-        }
+        $cod_class = $dataClass->fetchAll(\PDO::FETCH_OBJ);
+        $password = \App\model\PasswordModel::passwordOpen($conexao, $cod_class[0]->cod_turma);
+        $cod_pass = $password->fetchAll(\PDO::FETCH_OBJ);
 
-        return $dataClass;
+        $cod = new \stdClass;
+        $cod->class = $cod_class;
+        $cod->senha = $cod_pass;
+
+        return $cod;
     }
 
     public static function filterByShift($shiftValue): void

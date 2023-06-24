@@ -17,7 +17,7 @@
     <div class="content">
       <!--FORMULÁRIO DE LOGIN-->
       <div id="login">
-        <form method="post" action="">
+        <form method="post" id="form1">
           <h1>Login</h1>
           <p>
             <label for="cpf_login">Seu CPF</label>
@@ -35,15 +35,23 @@
           </p>
 
           <p>
-            <input type="submit" value="Logar" />
+            <input type="submit" class="btn-sub" value="Logar" />
           </p>
-
+        
           <p class="link">
             Sem conta?
             <a href="#paracadastro">Cadastre-se</a>
           </p>
         </form>
-      </div>
+        <div>
+          <p>
+            <input id="input1" type="submit" class="btn-auth" value="Verificar" /> 
+          </p>
+        </div>
+      </div>   
+      <script src="assets/js/jQuery/jquery-3.5.1.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      <script src="assets/js/script.js"></script>
 
       <!--FORMULÁRIO DE CADASTRO-->
       <div id="cadastro">
