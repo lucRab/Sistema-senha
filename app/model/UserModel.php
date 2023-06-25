@@ -1,5 +1,7 @@
 <?php
 namespace App\model;
+use Core\connection\Conexao;
+
 /**
  * Classe para conectar usuario com o banco de dados
  * @author Lucas Rabelo <email> 
@@ -12,17 +14,17 @@ class UserModel {
      * @param [objct] $data
      * @return true
      */
-    public static function createUser($conexao, $data) {
+    public static function createUser($data) {
+        $conexao = Conexao::conectar();
+        die(var_dump($conexao));
     //Código da função
         //instancia a conexão;
         //recebe os dados e coloca em um array para executar a query
         $params = array(         
-            'nome_aluno' => $data->nome_aluno, 'data_nascimento' => $data->data_nascimento,          
-            'nome_pai' => $data->nome_pai,   'nome_mae' => $data->nome_mae,
-            'sexo' => $data->sexo,           'cpf' => $data->cpf,
-            'telefone_celular' => $data->telefone_celular,   'email' => $data->email,
-            'endereco' => $data->endereco,             'numero_endereco' => $data->numero_endereco,
-            'responsavel_cpf' => $data->responsavel_cpf);
+            'nome_aluno' => $data->nome_aluno, 
+            'rg' => $data->rg,          
+            'cpf' => $data->cpf
+        );
         //Query sql
         $query = SQL_CREATE_USER();        
         $con = \validConnection::isValidConnection($conexao, $query, $params);
