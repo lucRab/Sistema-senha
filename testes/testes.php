@@ -2,7 +2,8 @@
 use App\model\UserModel;
 use App\controller;
 
-require_once "../core/conexao.php";
+
+require_once "../core/connection/Conexao.php";
 require_once "../core/validations/validData.class.php";
 require_once "../app/model/CoursesModel.php";
 require_once "../app/model/ClassesModel.php";
@@ -65,8 +66,8 @@ $cursos = \App\controller\CoursesController::getAllCourses($conexao);
 //// CLASSES
 
 \App\controller\ClassesController::filterByAge(10);
+
 \App\controller\ClassesController::filterByShift('MATUTINO');
 \App\controller\ClassesController::setCourse('BALLET');
 
 $teste = \App\controller\ClassesController::filterClassesController($conexao);
-var_dump($teste->fetchAll(\PDO::FETCH_OBJ));
