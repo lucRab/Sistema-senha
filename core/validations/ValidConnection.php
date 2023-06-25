@@ -1,4 +1,6 @@
 <?php
+namespace Core\validations;
+
 class validConnection
 {
     public function __construct()

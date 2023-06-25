@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <h1>Error <?= $error ?></h1>
+  <button>Pegar senha</button>
 </body>
 
 </html>

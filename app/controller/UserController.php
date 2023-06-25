@@ -1,12 +1,15 @@
 <?php
 namespace App\controller;
+use App\model\UserModel;
 
 class UserController {
 
-  public static function createUser($conexao,$data) 
+  public function __construct($router) {
+    $this->router = $router;
+  }
+
+  public function createUser($data) 
   {
-    $a = \App\model\UserModel::createUser($conexao,$data);
-    var_dump($data);
     $userExist = self::getUser($data);
     require_once __DIR__."/../view/login.php";
   }
@@ -17,10 +20,9 @@ class UserController {
     require_once __DIR__."/../view/assets/helper/error.php";
   }
 
-  public static function getUser($conexao,$dataUser) 
+  public static function getUser($dataUser) 
   {
-    $getUser = \App\model\UserModel::getUser($conexao,$dataUser);
-    return $getUser;
+   
   }
 
   public static function updateUser($dataUser) 
