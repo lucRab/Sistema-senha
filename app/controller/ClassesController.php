@@ -1,6 +1,8 @@
 <?php
-
 namespace App\controller;
+use App\model\ClassesModel;
+use App\model\CoursesModel;
+use App\model\PasswordModel;
 
 class ClassesController
 {
@@ -12,43 +14,47 @@ class ClassesController
     {
     }
 
-    public static function setCourse($courseName) {
-        self::$course = $courseName;
+    public static function isCourseExist($course) {
+        return sizeof(CoursesModel::getCourseModel($course));
     }
 
-    public static function filterClassesController($conexao)
+    public static function isValidShift($shift) {
+        $shifts = ['MATUTINO', 'VESPERTINO', 'NOTURNO'];
+        return in_array($shift, $shifts) ? $shift : false;
+    }
+
+    public static function filterClassesController($data)
     {
-        if (!self::$age) {
-            return 'Digite sua idade';
-        } elseif (!self::$course) {
-            return 'Escolha um curso';
+        $dataRequest = json_decode(file_get_contents('php://input'), true);
+
+        $course = strtoupper($data['course']);
+        $shift = strtoupper($data['shift']) ?: null;
+        
+        if (!self::isCourseExist($course)) {
+            return 'Curso inexistente';
+        }
+        if ($shift && !self::isValidShift($shift)) {
+            return 'Turno inexistente';
+        }
+        
+        $infosClass = new \stdClass();
+        $infosClass->courseName = $course;
+        $infosClass->age = '10';
+        $infosClass->shift = $shift;
+        $dataClass = \App\model\ClassesModel::filterClassesModel($infosClass); 
+        if (empty($dataClass)) {
+            http_response_code(404);
+            echo json_encode("Não há mais turmas");
+            die();
         }
 
-        $infosClass = new \stdClass();
-        $infosClass->courseName = self::$course;
-        $infosClass->age = self::$age;
-        $infosClass->shift = self::$shift;
-        $dataClass = \App\model\ClassesModel::filterClassesModel($conexao, $infosClass);
-
-        $cod_class = $dataClass->fetchAll(\PDO::FETCH_OBJ);
-        $password = \App\model\PasswordModel::passwordOpen($conexao, $cod_class[0]->cod_turma);
-        $cod_pass = $password->fetchAll(\PDO::FETCH_OBJ);
+        $dataPassword = \App\model\PasswordModel::passwordOpen($dataClass[0]->cod_turma);
 
         $cod = new \stdClass;
-        $cod->class = $cod_class;
-        $cod->senha = $cod_pass;
+        $cod->class = $dataClass[0];
+        $cod->password = $dataPassword[0];
 
-        return $cod;
-    }
-
-    public static function filterByShift($shiftValue): void
-    {
-        self::$shift = $shiftValue;
-    }
-
-    public static function filterByAge($ageValue): void
-    {
-        self::$age = $ageValue;
+        echo json_encode($cod);
     }
 
 }

@@ -1,8 +1,9 @@
 <?php
-
 namespace App\model;
-
-require_once "../core/validations/validConnection.class.php";
+use Core\connection\Conexao;
+use Core\validations\ValidConnection;
+use PDO;
+require_once __DIR__."/../../database/sqlClasses.php";
 
 class ClassesModel
 {
@@ -10,8 +11,10 @@ class ClassesModel
     {
     }
 
-    public static function filterClassesModel($conexao, $infosClass)
+    public static function filterClassesModel($infosClass)
     {
+        $conexao = Conexao::conectar();
+        
         $course = $infosClass->courseName;
         $age = $infosClass->age;
         $shift = $infosClass->shift;
@@ -20,14 +23,19 @@ class ClassesModel
 
         $params = ['idade' => $age];
 
-        if (!empty($shift)) {
+        if ($shift) {
             $conditions .= ' AND turno = :turno';
             $params['turno'] = $shift;
         }
 
-        $sql = SQL_FILTER_CLASSES($course, $conditions);
-        $teste = \validConnection::isValidConnection($conexao, $sql, $params);
-        return $teste;
+        $query = SQL_FILTER_CLASSES($course, $conditions);
+        // Inicia uma transação
+        $conexao->beginTransaction();
+        $class = validConnection::isValidConnection($conexao, $query, $params);
+        // Finaliza a transação
+        $conexao->commit();
+        $dataClass = $class->fetchAll(PDO::FETCH_OBJ);
+        return $dataClass;
     }
 
 }
