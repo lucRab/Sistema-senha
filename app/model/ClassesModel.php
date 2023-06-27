@@ -18,15 +18,19 @@ class ClassesModel
         $course = $infosClass->courseName;
         $age = $infosClass->age;
         $shift = $infosClass->shift;
+        $daysCourse = $infosClass->days;
 
-        $conditions = ' AND :idade BETWEEN idade_minima AND idade_maxima';
+        $conditionDay = ' AND t.dias_de_aula = (SELECT d.id_dia FROM dia d WHERE d.nome_dia = :daysCourse)'; 
+        
+        $conditionShift = ' AND turno = :turno';
 
-        $params = ['idade' => $age];
+        $conditions = 'AND :idade BETWEEN idade_minima AND idade_maxima' . $conditionShift . $conditionDay;
 
-        if ($shift) {
-            $conditions .= ' AND turno = :turno';
-            $params['turno'] = $shift;
-        }
+        $params = [
+            'idade' => $age,
+            'turno' => $shift,
+            'daysCourse' => $daysCourse,
+        ];
 
         $query = SQL_FILTER_CLASSES($course, $conditions);
         // Inicia uma transação
