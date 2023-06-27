@@ -8,10 +8,11 @@
     - Retorna a primeira turma com o menor número de senhas
   */
   function SQL_FILTER_CLASSES($courseName, $conditions = null) {
-    return "SELECT t.cod_turma, m.nome_modulo, c.nome_curso, t.nome_turma, COUNT(s.cod_turma) AS num_senhas , s.validade, t.turno FROM modulo m
+    return "SELECT t.cod_turma, m.nome_modulo, c.nome_curso, t.nome_turma, COUNT(s.cod_turma) AS num_senhas , s.validade, t.turno, d.nome_dia FROM modulo m
     INNER JOIN turma t on m.cod_modulo = t.cod_modulo
     INNER JOIN curso c on m.cod_curso = c.cod_curso
     INNER JOIN senha s on t.cod_turma = s.cod_turma
+    INNER JOIN dia d on t.dias_de_aula = d.id_dia
     AND s.situacao = 'DISPONIVEL'
     AND s.validade BETWEEN '2023-01-01' AND '2023-12-31'
     AND c.nome_curso = '{$courseName}'
@@ -22,11 +23,38 @@
     LIMIT 1
   ";
   }
+
+  function SQL_AVAILABLE_COURSE_DAYS($condition = null) {
+    return "SELECT DISTINCT d.nome_dia {$condition} FROM modulo m 
+    INNER JOIN turma t on m.cod_modulo = t.cod_modulo 
+    INNER JOIN curso c on m.cod_curso = c.cod_curso 
+    INNER JOIN senha s on t.cod_turma = s.cod_turma 
+    INNER JOIN dia d on t.dias_de_aula = d.id_dia 
+    AND s.situacao = 'DISPONIVEL' 
+    AND s.validade BETWEEN '2023-01-01' AND '2023-12-31' 
+    AND c.nome_curso = :course 
+    AND :idade BETWEEN idade_minima AND idade_maxima
+    WHERE t.situacao = 'ABERTA'";
+  }
+
+  function SQL_AVAILABLE_SHIFT_DAYS() {
+    return "SELECT DISTINCT t.turno FROM modulo m 
+    INNER JOIN turma t on m.cod_modulo = t.cod_modulo 
+    INNER JOIN curso c on m.cod_curso = c.cod_curso 
+    INNER JOIN senha s on t.cod_turma = s.cod_turma
+    AND s.situacao = 'DISPONIVEL' 
+    AND s.validade BETWEEN '2023-01-01' AND '2023-12-31' 
+    AND c.nome_curso = :course
+    AND t.dias_de_aula = (SELECT dia.id_dia FROM dia WHERE dia.nome_dia = :dayName)
+    AND :idade BETWEEN idade_minima AND idade_maxima
+    WHERE t.situacao = 'ABERTA'
+    ";
+  }
   
   function SQL_CREATE_USER() {
     return "INSERT INTO aluno(
-    nome_aluno, rg, cpf)               
-    VALUES( :nome_aluno, :rg, :cpf)";
+    nome_aluno, senha, cpf)               
+    VALUES( :nome_aluno, :senha, :cpf)";
   }
 
   function SQL_GET_USER() {

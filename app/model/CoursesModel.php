@@ -20,6 +20,31 @@ class CoursesModel
         return $allCourses;
     }
 
+    public static function getCourseDaysModel($course, $condition = null) {
+        $conexao = Conexao::conectar();
+        $query = SQL_AVAILABLE_COURSE_DAYS($condition);
+        $params = [
+            "course" => $course,
+            'idade' => '10'
+        ];
+        $con = validConnection::isValidConnection($conexao, $query, $params);
+        $dataDays = $con->fetchAll(PDO::FETCH_OBJ);
+        return $dataDays;
+    }
+
+    public static function getCourseShiftsModel($course, $day) {
+        $conexao = Conexao::conectar();
+        $query = SQL_AVAILABLE_SHIFT_DAYS();
+        $params = [
+            "course" => $course,
+            "dayName" => $day,
+            'idade' => '10'
+        ];
+        $con = validConnection::isValidConnection($conexao, $query, $params);
+        $dataShifts = $con->fetchAll(PDO::FETCH_OBJ);
+        return $dataShifts;
+    }
+
     public static function getCourseModel($course) {
         $conexao = Conexao::conectar();
         $query = SQL_SELECT_COURSE();
