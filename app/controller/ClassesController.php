@@ -28,23 +28,32 @@ class ClassesController
         $dataRequest = json_decode(file_get_contents('php://input'), true);
 
         $course = strtoupper($data['course']);
-        $shift = strtoupper($data['shift']) ?: null;
+        $shift = strtoupper($dataRequest['shift']);
+        $age = strtoupper($dataRequest['age']);
+        $days = strtoupper($dataRequest['days']);
         
         if (!self::isCourseExist($course)) {
-            return 'Curso inexistente';
+            http_response_code(404);
+            echo json_encode("Curso inexistente");
+            die();
         }
-        if ($shift && !self::isValidShift($shift)) {
-            return 'Turno inexistente';
+
+        if (!self::isValidShift($shift)) {
+            http_response_code(404);
+            echo json_encode("Turno inexistente");
+            die();
         }
         
         $infosClass = new \stdClass();
         $infosClass->courseName = $course;
-        $infosClass->age = '10';
+        $infosClass->age = $age;
         $infosClass->shift = $shift;
+        $infosClass->days = $days;
         $dataClass = \App\model\ClassesModel::filterClassesModel($infosClass); 
+
         if (empty($dataClass)) {
             http_response_code(404);
-            echo json_encode("Não há mais turmas");
+            echo json_encode($infosClass);
             die();
         }
 
