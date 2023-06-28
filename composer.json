@@ -8,6 +8,7 @@
   },
   "require": {
     "firebase/php-jwt": "^6.8",
-    "coffeecode/router": "^2.0"
+    "coffeecode/router": "^2.0",
+    "vlucas/phpdotenv": "^5.5"
   }
 }

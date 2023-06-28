@@ -1,8 +1,11 @@
-<!-- <?php 
+<?php 
 
-  var_dump($dataCourse);
+  function teste($element) {
+    return $element->nome_dia;
+  }
+  var_dump(array_map("teste", $days));
 
-?> -->
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +21,27 @@
   <h1>curso</h1>
   <button id="btn">Pegar senha</button>
 
+  <select name="days" id="days">
+    <?php 
+      foreach ($days as $day) {
+        ?>
+    <option value="<?= $day->nome_dia ?>"><?= $day->nome_dia ?></option>
+    <?php
+      }
+    ?>
+  </select>
+
+  <select name="shifts" id="shifts">
+    <?php 
+      foreach ($shifts as $shift) {
+        ?>
+    <option value="<?= $shift->turno ?>"><?= $shift->turno ?></option>
+    <?php
+      }
+    ?>
+  </select>
+
+  <script src="../app/view/assets/js/pages/course.js"></script>
   <script src="../app/view/assets/js/Password/password.js"></script>
 </body>
 

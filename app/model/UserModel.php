@@ -1,6 +1,9 @@
 <?php
 namespace App\model;
 use Core\connection\Conexao;
+use Core\validations\validConnection;
+use PDO;
+require_once __DIR__."/../../database/sqlClasses.php";
 
 /**
  * Classe para conectar usuario com o banco de dados
@@ -49,7 +52,8 @@ class UserModel {
      * @return true
      */
     
-    public static function updateUser($conexao, $data) {
+    public static function updateUser($data) {
+        $conexao = Conexao::conectar();
     //Código da função
         //instancia a conexão;
          //recebe os dados e coloca em um array para executar a query
@@ -62,8 +66,20 @@ class UserModel {
             'responsavel_cpf' => $data->responsavel_cpf, 'id' => $data->id);
          //Query sql
         $query = SQL_UPDATE_USER();
-        $con = \validConnection::isValidConnection($conexao, $query, $params);
+        $con = validConnection::isValidConnection($conexao, $query, $params);
         return $con;
+    }
+
+    public static function updateAge($data) {
+        $conexao = Conexao::conectar();
+        //Código da função
+        //instancia a conexão;
+         //recebe os dados e coloca em um array para executar a query
+        $params = $data;
+         //Query sql
+        $query = SQL_UPDATE_AGE_USER();
+        $con = validConnection::isValidConnection($conexao, $query, $params);
+        return $con->fetchAll(PDO::FETCH_OBJ);
     }
 }
  

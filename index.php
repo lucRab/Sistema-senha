@@ -26,7 +26,6 @@ $router->group('curso');
 $router->get("/{course}", "CoursesController:getCourse");
 
 $router->post("/{course}", "ClassesController:filterClassesController");
-$router->post("/{course}/{shift}", "ClassesController:filterClassesController");
 
 /* 
   Registro / Login
@@ -36,8 +35,17 @@ $router->get("/", "UserController:createUser");
 $router->post("/", "UserController:createUser");
 
 /* 
+  Endpoints
+*/
+$router->group('json');
+$router->post("/turnos", "Endpoints:getAllShifts");
+$router->post("/idade", "Endpoints:setDateBirth");
+$router->post("/token", "Endpoints:setToken");
+
+/* 
   Error
 */
+
 $router->group('ooops');
 $router->get("/{errcode}", "UserController:error");
 
