@@ -10,8 +10,7 @@ class UserController {
 
   public function createUser($data) 
   {
-    $userExist = self::getUser($data);
-    require_once __DIR__."/../view/login.php";
+    require_once __DIR__."/../view/register.php";
   }
 
   public static function error($data) 
@@ -20,9 +19,13 @@ class UserController {
     require_once __DIR__."/../view/assets/helper/error.php";
   }
 
-  public static function getUser($dataUser) 
+  public static function userLogin($dataUser) 
   {
-   
+    require_once __DIR__."/../view/login.php";
+  }
+
+  public static function getUser() {
+
   }
 
   public static function updateUser($dataUser) 
