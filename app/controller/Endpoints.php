@@ -7,6 +7,11 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 class Endpoints {
+  private static $route = null;
+
+  public function __construct($router) {
+    self::$route = $router;
+  }
 
   public static function getAllShifts() {
     $dataRequest = json_decode(file_get_contents('php://input'), true);
@@ -61,6 +66,7 @@ class Endpoints {
     $dotenv->load();
    
     $dataRequest = json_decode(file_get_contents('php://input'), true);
+
     $nome = $dataRequest['nome'];
     $cpf = $dataRequest['cpf'];
     $datanascimento = $dataRequest['data_nascimento'];
@@ -75,7 +81,7 @@ class Endpoints {
     $userFound = $prepare->fetch();
 
     $payload = [
-        "exp" => time() + 10,
+        "exp" => time() + 9999999,
         "iat" => time(),
         "nome" => $nome,
         "cpf" => $cpf,
@@ -84,6 +90,29 @@ class Endpoints {
 
     $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
     echo json_encode($encode);
+  }
+
+  public static function authToken() {
+    $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
+    $dotenv->load();
+    
+    $dataRequest = getallheaders();
+    $authorization = $dataRequest['Authorization'];
+
+    $token = str_replace('Bearer ','',$authorization);
+    $h = new \stdClass;
+ 
+    try{
+        $decoded = JWT ::decode($token,new Key($_ENV['KEY'],'HS512'));
+        $_SESSION['cpf'] = $decoded->cpf;
+        echo json_encode($decoded);
+    }catch(Throwable $e){
+        if($e->getMessage()=== 'Expired token') {
+            //http_response_code(401);
+            session_destroy();
+            echo json_encode('Expired token');
+        }
+    }
   }
 
 }
