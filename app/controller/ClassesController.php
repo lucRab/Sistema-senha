@@ -53,7 +53,7 @@ class ClassesController
 
         if (empty($dataClass)) {
             http_response_code(404);
-            echo json_encode($infosClass);
+            echo json_encode('Turma inexistente');
             die();
         }
 

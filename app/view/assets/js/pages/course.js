@@ -37,6 +37,8 @@ const handleChange = ({ target }) => {
     option.value = text;
     selectShifts.appendChild(option);
   });
+
+  shift = shifts[0]
 };
 
 const handleChangeShifts = ({ target }) => {
