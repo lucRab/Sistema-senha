@@ -1,10 +1,12 @@
 <?php 
 
 require_once __DIR__ . "/vendor/autoload.php";
+require "app/controller/Verification.php";
 use App\controller\UserController;
 use App\controller\CoursesController;
 use App\controller\ClassesController;
 use CoffeeCode\Router\Router;
+use App\controller\Verificar;
 
 $router = new Router("http://localhost/Sistema-Senha");
 
@@ -33,6 +35,19 @@ $router->post("/{course}", "ClassesController:filterClassesController");
 $router->group('login');
 $router->get("/", "UserController:createUser");
 $router->post("/", "UserController:createUser");
+
+
+$router->group('loginsenha');
+$router->get("/", "UserController:loginsenha");
+$router->post("/", "UserController:loginsenha");
+
+/*
+  Verificar login
+ */
+$router->group('verificar');
+$router->get("/", "Verificar:testar");
+$router->post("/", "Verificar:testar");
+
 
 /* 
   Endpoints
