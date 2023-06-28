@@ -49,7 +49,7 @@
       
       <!--FORMULÁRIO DE CADASTRO-->
       <div id="cadastro">
-        <form method="post" action="">
+        <form method="post" id="form2">
           <h1>Cadastro</h1>
           <p>
             <label for="nome_cad">Seu nome</label>
@@ -58,6 +58,10 @@
           <p>
             <label for="cpf_cad">Seu CPF</label>
             <input id="cpf_cad" name="cpf_cad" required="required" type="text" placeholder="000.000.000-00" />
+          </p>
+          <p>
+            <label for="data_cad">Data de Nascimento</label>
+            <input id="data_cad" name="data_cad" required="required" type="text" placeholder="Data de Nascimento" />
           </p>
           <p>
             <label for="senha_cad">Sua senha</label>
@@ -74,26 +78,6 @@
       </div>
     </div>
   </div>
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-  <script>
-    
-  const element = document.getElementById('form1')
-
-const allShifts = async (e) => {
-  e.preventDefault()
-  const response = await fetch('http://localhost/Sistema-Senha/json/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ cpf: '123', senha: '1000' }),
-  });
-  console.log(response);
-  const json = await response.json();
-  console.log(json);
-};
-
-element.addEventListener('submit', allShifts)
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="app/view/assets/js/script.js"></script>
 </body>

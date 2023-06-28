@@ -30,7 +30,7 @@ class Endpoints {
     echo json_encode($updateUser);
   }
 
-  public static function setToken() {
+  public static function setTokenLogin() {
     $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
     $dotenv->load();
     
@@ -49,7 +49,39 @@ class Endpoints {
     $payload = [
         "exp" => time() + 10,
         "iat" => time(),
-        "cpf" => $cpf
+        "cpf" => $cpf,
+        "senha" => $senha
+    ];
+
+    $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
+    echo json_encode($encode);
+  }
+
+  public static function setTokenCadastro() {
+    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
+    $dotenv->load();
+    
+    $dataRequest = json_decode(file_get_contents('php://input'), true);
+    $nome = $dataRequest['nome'];
+    $cpf = $dataRequest['cpf'];
+    $datanascimento = $dataRequest['data_nascimento'];
+    $senha = $dataRequest['senha'];
+
+    $conxao = Conexao::conectar();
+
+    $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
+    $prepare->execute([
+        'cpf' => $cpf
+    ]);
+    $userFound = $prepare->fetch();
+
+    $payload = [
+        "exp" => time() + 10,
+        "iat" => time(),
+        "nome" => $nome,
+        "cpf" => $cpf,
+        "datanascimento"=> $datanascimento,
+        "senha" => $senha
     ];
 
     $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
