@@ -6,6 +6,10 @@ use App\controller\CoursesController;
 use App\controller\ClassesController;
 use CoffeeCode\Router\Router;
 
+session_start();
+
+// var_dump($_SESSION['cpf']);
+
 $router = new Router("http://localhost/Sistema-Senha");
 
 /* 
@@ -16,7 +20,7 @@ $router->namespace("App\controller");
 /* 
   Home
 */
-$router->group('');
+$router->group('/');
 $router->get("/", "CoursesController:getAllCourses");
 
 /* 
@@ -31,7 +35,8 @@ $router->post("/{course}", "ClassesController:filterClassesController");
   Registro / Login
 */
 $router->group('login');
-$router->get("/", "UserController:createUser");
+$router->get("/", "UserController:userLogin");
+$router->get("/cadastro", "UserController:createUser");
 $router->post("/", "UserController:createUser");
 
 /* 
@@ -42,6 +47,7 @@ $router->post("/turnos", "Endpoints:getAllShifts");
 $router->post("/idade", "Endpoints:setDateBirth");
 $router->post("/token/login", "Endpoints:setTokenLogin");
 $router->post("/token/cadastro", "Endpoints:setTokenCadastro");
+$router->post("/token/verificar", "Endpoints:authToken");
 
 /* 
   Error
