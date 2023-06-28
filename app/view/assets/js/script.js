@@ -5,7 +5,7 @@ $('#form1').submit(function(e){
   var u_senha = $('#senha_login').val();
  //console.log(u_cpf,u_senha);
    $.ajax({
-      url:'http://localhost/Sistema-senha/app/controller/teste_jwt.controller.php',
+      url:'http://localhost/Sistema-senha/app/controller/Token.php',
       method: 'POST',
       data: {cpf: u_cpf, senha: u_senha},
       dataType: 'json' ,
@@ -18,10 +18,30 @@ $('#form1').submit(function(e){
 
       }
    });
-  //  .done(function(result){
+});
+const form = document.getElementById('form2');
+$(form).submit(function(e){
+    e.preventDefault();
 
-  //     sessionStorage.setItem('session',result)
-  //  });
+    var u_nome = $('#nome_cad').val();
+    var u_cpf = $('#cpf_cad').val();
+    var u_data = $('#data_cad').val();
+    var u_senha = $('#senha_cad').val();
+
+    $.ajax({
+        url:'http://localhost/Sistema-senha/login/token',
+        method: 'POST',
+        data: {nome: u_nome, cpf: u_cpf, data_nascimento: u_data, senha: u_senha},
+        dataType: 'json' ,
+        success:function(a, b, c) {
+            if(c.status === 200){
+               sessionStorage.setItem('session',a);
+               window.location.replace('http://localhost/Sistema-senha/')
+                console.log(c);
+            }
+  
+        }
+     });
 
 });
 const input1 = document.querySelector("#input1");

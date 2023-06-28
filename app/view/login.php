@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cidade do Saber</title>
-  <link rel="stylesheet" href="assets/css/login.css">
+  <link rel="stylesheet" href="app/view/assets/css/login.css">
 </head>
 <body>
   <h1 class="gradient">Cidade do Saber</h1>
@@ -38,21 +38,13 @@
             <a href="#paracadastro">Cadastre-se</a>
           </p>
         </form>
-        <div id="login">
-          <form id="input1">
-          <p>
-            <input  type="submit" class="btn-auth" value="Verificar" /> 
-          </p>
-          </form>
-        </div>
+        
       </div>
       
-      <script src="assets/js/jQuery/jquery-3.5.1.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <script src="assets/js/script.js"></script>
+     
       <!--FORMULÁRIO DE CADASTRO-->
       <div id="cadastro">
-        <form method="post" action="">
+        <form method="post" id='form2' >
           <h1>Cadastro</h1>
           <p>
             <label for="nome_cad">Seu nome</label>
@@ -63,11 +55,15 @@
             <input id="cpf_cad" name="cpf_cad" required="required" type="text" placeholder="000.000.000-00" />
           </p>
           <p>
+            <label for="data_cad">Data de Nascimento</label>
+            <input id="data_cad" name="data_cad" required="required" type="password" placeholder="Data de Nascimento" />
+          </p>
+          <p>
             <label for="senha_cad">Sua senha</label>
             <input id="senha_cad" name="senha_cad" required="required" type="password" placeholder="Digite a senha" />
           </p>
           <p>
-            <input type="submit" value="Cadastrar" />
+            <input type="submit" class="btn-sub" value="Cadastrar" />
           </p>
           <p class="link">
             Possui conta?
@@ -77,4 +73,9 @@
       </div>
     </div>
   </div>
+
+  <script src="app/view/assets/js/jQuery/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="app/view/assets/js/script.js"></script>
+  <script> </script>
 </body>
