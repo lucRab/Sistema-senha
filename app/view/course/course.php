@@ -41,8 +41,7 @@
     ?>
   </select>
 
-  <script src="../app/view/assets/js/pages/course.js"></script>
-  <script src="../app/view/assets/js/Password/password.js"></script>
+  <script type="module" src="../app/view/assets/js/script.js"></script>
 </body>
 
 </html>

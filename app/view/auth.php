@@ -10,7 +10,7 @@
     $authorization = $_POST['verificar'];
 
     $token = str_replace('Bearer ','',$authorization);
-    $h = new stdClass;
+    $h = new \stdClass;
 
     try{
         $decoded = JWT ::decode($token,new Key($_ENV['KEY'],'HS512'));

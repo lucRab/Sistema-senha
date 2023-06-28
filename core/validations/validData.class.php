@@ -1,53 +1,77 @@
-<?php 
+<?php
 
-class ValidData {
 
-  public function __construct(){}
-
-  public static function isValidEmail($email) {
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      return true;
-    } else {
-      return false;
+class ValidData
+{
+    public function __construct()
+    {
     }
-  }
 
-  public static function isValidCPF($number) {
-    $cpf = preg_replace('/[^0-9]/', "", $number);
+    public static function isValidName($value)
+    {
+        $regex = "/^((\b[A-zÀ-ú']{2,40}\b)\s*){2,}$/";
+        return preg_match($regex, $value) ? true : false;
+    }
 
-    if (strlen($cpf) != 11 || preg_match('/([0-9])\1{10}/', $cpf)) {
-      return false;
-  }
-
-    $number_quantity_to_loop = [9, 10];
-
-    foreach ($number_quantity_to_loop as $item) {
-
-        $sum = 0;
-        $number_to_multiplicate = $item + 1;
-    
-        for ($index = 0; $index < $item; $index++) {
-
-            $sum += $cpf[$index] * ($number_to_multiplicate--);
-    
-        }
-
-        $result = (($sum * 10) % 11);
-
-        if ($cpf[$item] != $result) {
+    public static function isValidCPF($cpf = null)
+    {
+        // Verifica se um número foi informado
+        if(empty($cpf)) {
             return false;
         }
 
+        // Elimina possivel mascara
+        $cpf = preg_replace("/[^0-9]/", "", $cpf);
+        $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+
+        // Verifica se o numero de digitos informados é igual a 11
+        if (strlen($cpf) != 11) {
+            return false;
+        }
+        // Verifica se nenhuma das sequências invalidas abaixo
+        // foi digitada. Caso afirmativo, retorna falso
+        elseif ($cpf == '00000000000' ||
+            $cpf == '11111111111' ||
+            $cpf == '22222222222' ||
+            $cpf == '33333333333' ||
+            $cpf == '44444444444' ||
+            $cpf == '55555555555' ||
+            $cpf == '66666666666' ||
+            $cpf == '77777777777' ||
+            $cpf == '88888888888' ||
+            $cpf == '99999999999') {
+            return false;
+            // Calcula os digitos verificadores para verificar se o
+            // CPF é válido
+        } else {
+
+            for ($t = 9; $t < 11; $t++) {
+
+                for ($d = 0, $c = 0; $c < $t; $c++) {
+                    $d += $cpf[$c] * (($t + 1) - $c);
+                }
+                $d = ((10 * $d) % 11) % 10;
+                if ($cpf[$c] != $d) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 
-    return true;
+    public static function isValidPassword($password)
+    {
+        $regex = '/^.{6,}$/';
+        return preg_match($regex, $password) ? true : false;
+    }
 
-  }
-
-  public static function isValidPassword($password) {
-    $regex = '/(?!\s)(?=.*?[a-z]{1,})(?=.*?[A-Z]{1,})(?=.*?\d{1,}).*(?=.?[^a-zA-Z0-9]{1,})?.([^\s]){8,}/';
-    return preg_match($regex, $password) ? true : false;
-  }
+    public static function isValidDate($value)
+    {
+        $birthDate = new DateTime($date);
+        $currentDate = new DateTime();
+        return $birthDate->getTimestamp() > $currentDate->getTimestamp() ? false : true;
+    }
 
 
 }
