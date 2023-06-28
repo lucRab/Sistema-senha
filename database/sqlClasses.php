@@ -17,6 +17,7 @@
     AND s.validade BETWEEN '2023-01-01' AND '2023-12-31'
     AND c.nome_curso = '{$courseName}'
     WHERE t.situacao = 'ABERTA'
+    AND t.cod_periodo_letivo = (SELECT max(t.cod_periodo_letivo) from turma)
     {$conditions}
     GROUP BY t.cod_turma
     ORDER BY num_senhas ASC
@@ -34,7 +35,9 @@
     AND s.validade BETWEEN '2023-01-01' AND '2023-12-31' 
     AND c.nome_curso = :course 
     AND :idade BETWEEN idade_minima AND idade_maxima
-    WHERE t.situacao = 'ABERTA'";
+    AND t.situacao = 'ABERTA'
+    WHERE t.cod_periodo_letivo = (SELECT max(t.cod_periodo_letivo) from turma)
+    ";
   }
 
   function SQL_AVAILABLE_SHIFT_DAYS() {
@@ -48,6 +51,7 @@
     AND t.dias_de_aula = (SELECT dia.id_dia FROM dia WHERE dia.nome_dia = :dayName)
     AND :idade BETWEEN idade_minima AND idade_maxima
     WHERE t.situacao = 'ABERTA'
+    AND t.cod_periodo_letivo = (SELECT max(t.cod_periodo_letivo) from turma)
     ";
   }
   
@@ -66,6 +70,11 @@
     data_nascimento = :data_nascimento, nome_pai = :nome_pai, nome_mae = :nome_mae, sexo = :sexo,
     cpf = :cpf, telefone_celular = :telefone, email = :email, endereco = :rua,
     numero_endereco = :numero_casa, responsavel_cpf = :responsavel_cpf WHERE cod_aluno = :id";
+  }
+
+  
+  function SQL_UPDATE_AGE_USER() {
+    return "UPDATE aluno SET data_nascimento = :data_nascimento WHERE cod_aluno = :id";
   }
 
   function SQL_SELECT_COURSES(){

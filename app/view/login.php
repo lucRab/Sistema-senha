@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cidade do Saber</title>
-  <link rel="stylesheet" href="assets/css/login.css">
+  <link rel="stylesheet" href="app/view/assets/css/login.css">
 </head>
 <body>
   <h1 class="gradient">Cidade do Saber</h1>
@@ -47,9 +47,6 @@
         </div>
       </div>
       
-      <script src="assets/js/jQuery/jquery-3.5.1.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <script src="assets/js/script.js"></script>
       <!--FORMULÁRIO DE CADASTRO-->
       <div id="cadastro">
         <form method="post" action="">
@@ -77,4 +74,26 @@
       </div>
     </div>
   </div>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    
+  const element = document.getElementById('form1')
+
+const allShifts = async (e) => {
+  e.preventDefault()
+  const response = await fetch('http://localhost/Sistema-Senha/json/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ cpf: '123', senha: '1000' }),
+  });
+  console.log(response);
+  const json = await response.json();
+  console.log(json);
+};
+
+element.addEventListener('submit', allShifts)
+  </script>
 </body>
