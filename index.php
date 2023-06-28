@@ -40,7 +40,8 @@ $router->post("/", "UserController:createUser");
 $router->group('json');
 $router->post("/turnos", "Endpoints:getAllShifts");
 $router->post("/idade", "Endpoints:setDateBirth");
-$router->post("/token", "Endpoints:setToken");
+$router->post("/token/login", "Endpoints:setTokenLogin");
+$router->post("/token/cadastro", "Endpoints:setTokenCadastro");
 
 /* 
   Error

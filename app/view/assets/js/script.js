@@ -1,12 +1,13 @@
-const element = document.getElementById('form1')
+const formLogin = document.getElementById('form1');
+const formRegister = document.getElementById('form2');
 
-const allShifts = async( e) => {
+const requestTokenLogin = async (e) => {
   e.preventDefault();
 
-    var cpf = document.querySelector('#cpf_login').value;
-    var senha = document.querySelector('#senha_login').value;
+  const cpf = document.querySelector('#cpf_login').value;
+  const senha = document.querySelector('#senha_login').value;
 
-  const response = await fetch('http://localhost/Sistema-Senha/json/token', {
+  const response = await fetch('http://localhost/Sistema-Senha/json/token/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -16,49 +17,52 @@ const allShifts = async( e) => {
   const json = await response.json();
   //console.log(response.status);
 
-  if(response.status === 200){
-        sessionStorage.setItem('session',json);
-        window.location.replace('http://localhost/Sistema-senha/')
-        console.log(response);
-    }
+  if (response.status === 200) {
+    sessionStorage.setItem('session', json);
+    window.location.replace('http://localhost/Sistema-senha/');
+    console.log(response);
+  }
 };
 
-element.addEventListener('submit', allShifts);
+const requestTokenRegister = async (e) => {
+  e.preventDefault();
+  const nome = document.querySelector('#nome_cad').value;
+  const cpf = document.querySelector('#cpf_cad').value;
+  const data_nascimento = document.querySelector('#data_cad').value;
+  const senha = document.querySelector('#senha_cad').value;
 
-const a = document.getElementById('form2')
+  const response = await fetch('http://localhost/Sistema-Senha/json/token/cadastro', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      nome: nome,
+      cpf: cpf,
+      data_nascimento: data_nascimento,
+      senha: senha,
+    }),
+  });
+  const json = await response.json();
+  console.log(json);
+  if (response.status === 200) {
+    // sessionStorage.setItem('session', json);
+    // window.location.replace('http://localhost/Sistema-senha/');
+    console.log(response);
+  }
+};
 
-const b = async(e)=>{   
-    e.preventDefault()
-    var nome =  document. querySelector("#nome_cad").value;
-    var cpf =  document. querySelector("#cpf_cad").value;
-    var data_nascimento =  document. querySelector("#data_cad").value;
-    var senha =  document. querySelector("#senha_cad").value;
-  
-    const response = await fetch('http://localhost/Sistema-Senha/json/token1', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({nome: nome, cpf: cpf, data_nascimento: data_nascimento, senha: senha}),
-    }); 
-    const json = await response.json();
-    if(response.status === 200){
-        sessionStorage.setItem('session',json);
-        window.location.replace('http://localhost/Sistema-senha/')
-        console.log(response);
-    }
-}
-
-a.addEventListener('submit',b)
+formLogin.addEventListener('submit', requestTokenLogin);
+formRegister.addEventListener('submit', requestTokenRegister);
 
 // const allShifts1 = async (alement) => {
 //   alement.preventDefault()
-  
+
 // }
-    // $('#form1').submit(function(e){
+// $('#form1').submit(function(e){
 //   e.preventDefault();
 
-//   var u_cpf = $('#cpf_login').val();
+//   const u_cpf = $('#cpf_login').val();
 //   var u_senha = $('#senha_login').val();
 //  //console.log(u_cpf,u_senha);
 //    $.ajax({
@@ -90,7 +94,7 @@ a.addEventListener('submit',b)
 //       var verificar = 'Bearer '+ sessionStorage.getItem('session');
 //       //console.log(verificar);
 
-//       $.ajax({ 
+//       $.ajax({
 //           url:'http://localhost/Sistema-senha/app/view/auth.php',
 //           method: 'POST',
 //           data: {verificar: verificar},
@@ -102,10 +106,5 @@ a.addEventListener('submit',b)
 //           console.log(result);
 //           }
 //       });
-
-
-
-
-
 
 //});

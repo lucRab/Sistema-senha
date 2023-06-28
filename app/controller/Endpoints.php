@@ -5,7 +5,6 @@ use App\model\UserModel;
 use Core\connection\Conexao;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Dotenv;
 
 class Endpoints {
 
@@ -58,9 +57,9 @@ class Endpoints {
   }
 
   public static function setTokenCadastro() {
-    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
+    $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
     $dotenv->load();
-    
+   
     $dataRequest = json_decode(file_get_contents('php://input'), true);
     $nome = $dataRequest['nome'];
     $cpf = $dataRequest['cpf'];
@@ -80,8 +79,7 @@ class Endpoints {
         "iat" => time(),
         "nome" => $nome,
         "cpf" => $cpf,
-        "datanascimento"=> $datanascimento,
-        "senha" => $senha
+        "datanascimento"=> $datanascimento
     ];
 
     $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
