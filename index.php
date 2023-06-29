@@ -4,6 +4,7 @@ require_once __DIR__ . "/vendor/autoload.php";
 use App\controller\UserController;
 use App\controller\CoursesController;
 use App\controller\ClassesController;
+use App\controller\Verification;
 use CoffeeCode\Router\Router;
 
 session_start();
@@ -38,6 +39,12 @@ $router->group('login');
 $router->get("/", "UserController:userLogin");
 $router->get("/cadastro", "UserController:createUser");
 $router->post("/", "UserController:createUser");
+/*
+  Verificar login
+ */
+$router->group('verificar');
+$router->get("/", "Verification:testar");
+$router->post("/", "Verification:testar");
 
 /* 
   Endpoints

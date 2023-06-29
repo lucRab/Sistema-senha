@@ -40,10 +40,10 @@ export const requestTokenRegister = async () => {
     }),
   });
   const json = await response.json();
-  console.log(json);
+  //console.log(json);
   if (response.status === 200) {
     localStorage.setItem('token', json);
-    // window.location.replace('http://localhost/Sistema-senha/');
+     window.location.replace('http://localhost/Sistema-senha/');
     console.log(response);
   }
 };

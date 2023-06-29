@@ -35,14 +35,16 @@ class Endpoints {
   }
 
   public static function setTokenLogin() {
-    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
+    $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
     $dotenv->load();
+    
     
     $dataRequest = json_decode(file_get_contents('php://input'), true);
     $cpf = $dataRequest['cpf'];
     $senha = $dataRequest['senha'];
 
     $conxao = Conexao::conectar();
+
 
     $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
     $prepare->execute([
@@ -67,25 +69,28 @@ class Endpoints {
    
     $dataRequest = json_decode(file_get_contents('php://input'), true);
 
-    $nome = $dataRequest['nome'];
-    $cpf = $dataRequest['cpf'];
-    $datanascimento = $dataRequest['data_nascimento'];
-    $senha = $dataRequest['senha'];
+    $data = new \stdClass;
+    $data->nome_aluno = $dataRequest['nome'];
+    $data->cpf = $dataRequest['cpf'];
+    $data->datanascimento = $dataRequest['data_nascimento'];
+    $data->senha = $dataRequest['senha'];
 
-    $conxao = Conexao::conectar();
+    //$conxao = Conexao::conectar();
 
-    $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
-    $prepare->execute([
-        'cpf' => $cpf
-    ]);
-    $userFound = $prepare->fetch();
+    $inser = UserModel::createUser($data);
+
+    // $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
+    // $prepare->execute([
+    //     'cpf' => $cpf
+    // ]);
+    // $userFound = $prepare->fetch();
 
     $payload = [
         "exp" => time() + 9999999,
         "iat" => time(),
-        "nome" => $nome,
-        "cpf" => $cpf,
-        "datanascimento"=> $datanascimento
+        "nome" => $data->nome_aluno,
+        "cpf" => $data->cpf,
+        "datanascimento"=> $data->datanascimento
     ];
 
     $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');

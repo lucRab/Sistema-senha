@@ -3,11 +3,11 @@ namespace App\controller;
 use App\model\UserModel;
 
 class UserController {
-
+ 
   public function __construct($router) {
     $this->router = $router;
   }
-
+  
   public function createUser($data) 
   {
     require_once __DIR__."/../view/register.php";
