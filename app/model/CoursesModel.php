@@ -25,7 +25,7 @@ class CoursesModel
         $query = SQL_AVAILABLE_COURSE_DAYS($condition);
         $params = [
             "course" => $course,
-            'idade' => '10'
+            'idade' => '15'
         ];
         $con = validConnection::isValidConnection($conexao, $query, $params);
         $dataDays = $con->fetchAll(PDO::FETCH_OBJ);
@@ -38,7 +38,7 @@ class CoursesModel
         $params = [
             "course" => $course,
             "dayName" => $day,
-            'idade' => '10'
+            'idade' => '15'
         ];
         $con = validConnection::isValidConnection($conexao, $query, $params);
         $dataShifts = $con->fetchAll(PDO::FETCH_OBJ);

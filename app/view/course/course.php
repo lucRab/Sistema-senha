@@ -3,7 +3,6 @@
   function teste($element) {
     return $element->nome_dia;
   }
-  var_dump(array_map("teste", $days));
 
 ?>
 

@@ -57,8 +57,8 @@
   
   function SQL_CREATE_USER() {
     return "INSERT INTO aluno(
-    nome_aluno, senha, cpf)               
-    VALUES( :nome_aluno, :senha, :cpf)";
+    nome_aluno, data_nascimento, cpf, senha)               
+    VALUES(:nome_aluno, :data_nascimento, :cpf, :senha)";
   }
 
   function SQL_GET_USER() {
@@ -90,5 +90,13 @@
   }
 
   function SQL_SELECT_COURSE(){
-    return "SELECT * FROM curso WHERE nome_curso = :nome_curso";
+    return "SELECT * FROM curso WHERE slug = :nome_curso";
+  }
+
+  function SQL_SELECT_PASSWORDS(){
+    return "SELECT * FROM senha WHERE cod_aluno = :cod_aluno";
+  }
+
+  function SQL_DELETE_PASSWORD() {
+    return "UPDATE senha SET cod_aluno = null, situacao = 'DISPONIVEL' WHERE cod_aluno = :cod_aluno";
   }

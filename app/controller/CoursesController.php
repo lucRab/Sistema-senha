@@ -4,8 +4,10 @@ use App\model\CoursesModel;
 
 class CoursesController {
 
-    public function __construct() 
+    private static $teste = '';
+    public function __construct($router) 
     {
+        self::$teste = $router;
     }
 
 
@@ -31,11 +33,10 @@ class CoursesController {
         $course = strtoupper($data['course']);
         $dataCourse = \App\model\CoursesModel::getCourseModel($course);
         $days = self::getCourseDays($course);
-        if (sizeof($days)) 
-        {
-            $firstDay = $days[0]->nome_dia;
-            $shifts = self::getCourseShifts($course, $firstDay);
-        }
+        // if (!sizeof($days)) self::$teste->redirect('/error');
+        var_dump($dataCourse);
+        $firstDay = $days[0]->nome_dia;
+        $shifts = self::getCourseShifts($course, $firstDay);
         require_once __DIR__."/../view/course/course.php";
     }
 

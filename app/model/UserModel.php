@@ -1,7 +1,7 @@
 <?php
 namespace App\model;
 use Core\connection\Conexao;
-use Core\validations\validConnection;
+use Core\validations\ValidConnection;
 use PDO;
 require_once __DIR__."/../../database/sqlClasses.php";
 
@@ -19,19 +19,18 @@ class UserModel {
      */
     public static function createUser($data) {
         $conexao = Conexao::conectar();
-        die(var_dump($conexao));
-    //Código da função
-        //instancia a conexão;
-        //recebe os dados e coloca em um array para executar a query
-        $params = array(         
+        $params = [       
             'nome_aluno' => $data->nome_aluno, 
-            'rg' => $data->rg,          
-            'cpf' => $data->cpf
-        );
-        //Query sql
-        $query = SQL_CREATE_USER();        
-        $con = \validConnection::isValidConnection($conexao, $query, $params);
-        return $con;
+            'data_nascimento' => $data->data_nascimento,          
+            'cpf' => $data->cpf,
+            'senha' => $data->senha
+        ];
+        $query = SQL_CREATE_USER();           
+        $conexao->beginTransaction();
+        $con = ValidConnection::isValidConnection($conexao, $query, $params);
+        $id = $conexao->lastInsertId();
+        $conexao->commit();
+        return $id;
     }
     /**
      * Função para selecionar os dados do usuario
@@ -85,7 +84,7 @@ class UserModel {
     public static function updatePasswordUser($params) {
         $conexao = Conexao::conectar();
         $query = SQL_UPDATE_PASSWORD_USER();
-        $con = validConnection::isValidConnection($conexao, $query, $params);
+        $con = ValidConnection::isValidConnection($conexao, $query, $params);
         return $con->fetchAll(PDO::FETCH_OBJ);
     }
 }

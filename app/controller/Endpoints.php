@@ -41,8 +41,8 @@ class Endpoints {
     $id = $dataRequest['id'];
     $cod_senha = $dataRequest['cod_senha'];
     $data = [
-      "cod_aluno" => $id,
-      "cod_senha" => $cod_senha,
+      "cod_aluno" => 1,
+      "cod_senha" => 1,
       "data_atualizado" => date("Y/m/d")
     ];
     $updateUser = UserModel::updatePasswordUser($data);
