@@ -77,6 +77,14 @@
     return "UPDATE aluno SET data_nascimento = :data_nascimento WHERE cod_aluno = :id";
   }
 
+  function SQL_UPDATE_PASSWORD_USER() {
+    return "UPDATE senha SET cod_aluno = :cod_aluno, data_atualizado = :data_atualizado WHERE cod_senha = :cod_senha";
+  }
+
+  function SQL_GET_USER_PASSWORDS() {
+    return "SELECT cod_senha FROM `senha` WHERE data_atualizado = :data_hoje AND cod_aluno = :cod_aluno";
+  }
+
   function SQL_SELECT_COURSES(){
     return "SELECT * FROM curso";
   }

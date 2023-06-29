@@ -33,5 +33,10 @@ class UserController {
     
   }
 
+  public static function getUserPasswords($dataUser) 
+  {
+    require_once __DIR__."/../view/historyPasswords.php";
+  }
+
 }
  

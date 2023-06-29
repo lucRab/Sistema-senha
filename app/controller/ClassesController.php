@@ -23,6 +23,13 @@ class ClassesController
         return in_array($shift, $shifts) ? $shift : false;
     }
 
+    public static function maxQuantPasswords() {
+        $dataRequest = json_decode(file_get_contents('php://input'), true);
+
+        $quantPasswords = ClassesModel::maxQuantPasswordsModel(1);
+        return sizeof($quantPasswords);
+    }
+
     public static function filterClassesController($data)
     {
         $dataRequest = json_decode(file_get_contents('php://input'), true);
@@ -41,6 +48,12 @@ class ClassesController
         if (!self::isValidShift($shift)) {
             http_response_code(404);
             echo json_encode("Turno inexistente");
+            die();
+        }
+
+        if (self::maxQuantPasswords()) {
+            http_response_code(404);
+            echo json_encode("Já pegou mt senha");
             die();
         }
         
