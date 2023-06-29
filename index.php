@@ -27,7 +27,8 @@ $router->get("/", "CoursesController:getAllCourses");
   Histórico
 */
 $router->group('/historico');
-$router->get("/", "UserController:getUserPasswords");
+$router->get("/", "HistoryController:getPasswords");
+$router->put("/update", "HistoryController:deletePassword");
 
 /* 
   Cursos

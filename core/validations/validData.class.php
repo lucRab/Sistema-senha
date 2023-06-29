@@ -72,6 +72,4 @@ class ValidData
         $currentDate = new DateTime();
         return $birthDate->getTimestamp() > $currentDate->getTimestamp() ? false : true;
     }
-
-
 }

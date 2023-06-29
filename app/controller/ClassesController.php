@@ -50,13 +50,13 @@ class ClassesController
             echo json_encode("Turno inexistente");
             die();
         }
-
+ 
         if (self::maxQuantPasswords()) {
             http_response_code(404);
             echo json_encode("Já pegou mt senha");
             die();
         }
-        
+
         $infosClass = new \stdClass();
         $infosClass->courseName = $course;
         $infosClass->age = $age;
