@@ -24,6 +24,12 @@ $router->group('/');
 $router->get("/", "CoursesController:getAllCourses");
 
 /* 
+  Histórico
+*/
+$router->group('/historico');
+$router->get("/", "UserController:getUserPasswords");
+
+/* 
   Cursos
 */
 $router->group('curso');
@@ -45,6 +51,7 @@ $router->post("/", "UserController:createUser");
 $router->group('json');
 $router->post("/turnos", "Endpoints:getAllShifts");
 $router->post("/idade", "Endpoints:setDateBirth");
+$router->post("/senha", "Endpoints:setUserPassword");
 $router->post("/token/login", "Endpoints:setTokenLogin");
 $router->post("/token/cadastro", "Endpoints:setTokenCadastro");
 $router->post("/token/verificar", "Endpoints:authToken");
@@ -52,7 +59,6 @@ $router->post("/token/verificar", "Endpoints:authToken");
 /* 
   Error
 */
-
 $router->group('ooops');
 $router->get("/{errcode}", "UserController:error");
 

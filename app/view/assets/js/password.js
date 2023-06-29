@@ -17,10 +17,27 @@ export default function requestClass() {
       console.log(response);
       const json = await response.json();
       console.log(json);
+      if (response.ok) {
+        updatePassword(json.password.cod_senha)
+      }
     } else {
       alert('n foi selecionado');
     }
   };
+
+
+  const updatePassword = async (cod_senha) => { 
+    const response = await fetch('http://localhost/Sistema-Senha/json/senha', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cod_senha: 1, id: 1 }),
+    })
+    console.log(response);
+    const json = await response.json()
+    console.log(json);
+  }
 
   btn.addEventListener('click', handleClick);
 }

@@ -34,8 +34,23 @@ class Endpoints {
     echo json_encode($updateUser);
   }
 
+  public static function setUserPassword() {
+    setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    date_default_timezone_set('America/Sao_Paulo');
+    $dataRequest = json_decode(file_get_contents('php://input'), true);
+    $id = $dataRequest['id'];
+    $cod_senha = $dataRequest['cod_senha'];
+    $data = [
+      "cod_aluno" => $id,
+      "cod_senha" => $cod_senha,
+      "data_atualizado" => date("Y/m/d")
+    ];
+    $updateUser = UserModel::updatePasswordUser($data);
+    echo json_encode($updateUser);
+  }
+
   public static function setTokenLogin() {
-    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
+    $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__FILE__,3));
     $dotenv->load();
     
     $dataRequest = json_decode(file_get_contents('php://input'), true);
@@ -106,7 +121,7 @@ class Endpoints {
         $decoded = JWT ::decode($token,new Key($_ENV['KEY'],'HS512'));
         $_SESSION['cpf'] = $decoded->cpf;
         echo json_encode($decoded);
-    }catch(Throwable $e){
+    }catch(\Throwable $e){
         if($e->getMessage()=== 'Expired token') {
             //http_response_code(401);
             session_destroy();

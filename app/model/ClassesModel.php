@@ -11,6 +11,21 @@ class ClassesModel
     {
     }
 
+    public static function maxQuantPasswordsModel($cod_aluno) {
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        $conexao = Conexao::conectar();
+
+        $query = SQL_GET_USER_PASSWORDS();
+        $params = [
+            "data_hoje" => date("Y/m/d"),
+            "cod_aluno" => 1
+        ];
+
+        $con = ValidConnection::isValidConnection($conexao, $query, $params);
+        return $con->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public static function filterClassesModel($infosClass)
     {
         $conexao = Conexao::conectar();
@@ -35,7 +50,7 @@ class ClassesModel
         $query = SQL_FILTER_CLASSES($course, $conditions);
         // Inicia uma transação
         $conexao->beginTransaction();
-        $class = validConnection::isValidConnection($conexao, $query, $params);
+        $class = ValidConnection::isValidConnection($conexao, $query, $params);
         // Finaliza a transação
         $conexao->commit();
         $dataClass = $class->fetchAll(PDO::FETCH_OBJ);

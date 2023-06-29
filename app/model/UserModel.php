@@ -81,5 +81,12 @@ class UserModel {
         $con = validConnection::isValidConnection($conexao, $query, $params);
         return $con->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public static function updatePasswordUser($params) {
+        $conexao = Conexao::conectar();
+        $query = SQL_UPDATE_PASSWORD_USER();
+        $con = validConnection::isValidConnection($conexao, $query, $params);
+        return $con->fetchAll(PDO::FETCH_OBJ);
+    }
 }
  
