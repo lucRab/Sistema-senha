@@ -1,3 +1,10 @@
+<?php 
+
+  var_dump($_SESSION);
+
+?>
+
+
 <!DOCTYPE html>
 
 <head>
@@ -9,6 +16,7 @@
 </head>
 
 <body>
+  <div class="c-loader"></div>
   <h1 class="gradient">Cidade do Saber</h1>
   <div class="container">
     <div class="content">
@@ -48,4 +56,5 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script type="module" src="app/view/assets/js/validations.js"></script>
   <script type="module" src="app/view/assets/js/token/token.js"></script>
+  <script type="module" src="app/view/assets/js/loadingLogin.js"></script>
 </body>

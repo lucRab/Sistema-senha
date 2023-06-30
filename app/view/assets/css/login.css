@@ -1,4 +1,7 @@
 /* CSS reset */
+
+@import 'loading.css';
+
 *,
 *:before,
 *:after {

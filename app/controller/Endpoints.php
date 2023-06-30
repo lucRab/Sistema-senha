@@ -7,10 +7,10 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 class Endpoints {
-  private static $route = null;
+  private static $router = null;
 
   public function __construct($router) {
-    self::$route = $router;
+    self::$router = $router;
   }
 
   public static function getAllShifts() {
@@ -66,7 +66,7 @@ class Endpoints {
     $userFound = $prepare->fetch();
 
     $payload = [
-        "exp" => time() + 10,
+        "exp" => time() + 99999,
         "iat" => time(),
         "cpf" => $cpf,
         "senha" => $senha
@@ -82,25 +82,21 @@ class Endpoints {
    
     $dataRequest = json_decode(file_get_contents('php://input'), true);
 
-    $nome = $dataRequest['nome'];
-    $cpf = $dataRequest['cpf'];
-    $datanascimento = $dataRequest['data_nascimento'];
-    $senha = $dataRequest['senha'];
+    $data = new \stdClass;
+    $data->nome_aluno = $dataRequest['nome'];
+    $data->cpf = $dataRequest['cpf'];
+    $data->datanascimento = $dataRequest['data_nascimento'];
+    $data->senha = $dataRequest['senha'];
 
-    $conxao = Conexao::conectar();
-
-    $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
-    $prepare->execute([
-        'cpf' => $cpf
-    ]);
-    $userFound = $prepare->fetch();
+    $userId = UserModel::createUser($data);
 
     $payload = [
-        "exp" => time() + 9999999,
+        "exp" => time() + 99999,
         "iat" => time(),
-        "nome" => $nome,
-        "cpf" => $cpf,
-        "datanascimento"=> $datanascimento
+        "id_usuario" => $userId,
+        "nome" => $data->nome_aluno,
+        "cpf" => $data->cpf,
+        "data_nascimento"=> $data->datanascimento
     ];
 
     $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
@@ -119,12 +115,15 @@ class Endpoints {
  
     try{
         $decoded = JWT ::decode($token,new Key($_ENV['KEY'],'HS512'));
+        $_SESSION['nome'] = $decoded->nome;
         $_SESSION['cpf'] = $decoded->cpf;
+        $_SESSION['id_usuario'] = $decoded->id_usuario;
         echo json_encode($decoded);
     }catch(\Throwable $e){
         if($e->getMessage()=== 'Expired token') {
             //http_response_code(401);
             session_destroy();
+            http_response_code(401);
             echo json_encode('Expired token');
         }
     }

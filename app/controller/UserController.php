@@ -10,6 +10,7 @@ class UserController {
 
   public function createUser($data) 
   {
+    session_destroy();
     require_once __DIR__."/../view/register.php";
   }
 
@@ -21,6 +22,7 @@ class UserController {
 
   public static function userLogin($dataUser) 
   {
+    session_destroy();
     require_once __DIR__."/../view/login.php";
   }
 

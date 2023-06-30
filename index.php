@@ -8,8 +8,6 @@ use CoffeeCode\Router\Router;
 
 session_start();
 
-// var_dump($_SESSION['cpf']);
-
 $router = new Router("http://localhost/Sistema-Senha");
 
 /* 
