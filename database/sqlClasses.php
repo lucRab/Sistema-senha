@@ -57,8 +57,8 @@
   
   function SQL_CREATE_USER() {
     return "INSERT INTO aluno(
-    nome_aluno, data_nascimento, cpf, senha)               
-    VALUES(:nome_aluno, :data_nascimento, :cpf, :senha)";
+    nome_aluno, data_nascimento, cpf, senha_aluno)               
+    VALUES(:nome_aluno, :data_nascimento, :cpf, :senha_aluno)";
   }
 
   function SQL_GET_USER() {

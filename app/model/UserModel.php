@@ -19,12 +19,14 @@ class UserModel {
      */
     public static function createUser($data) {
         $conexao = Conexao::conectar();
+
         $params = [       
             'nome_aluno' => $data->nome_aluno, 
-            'data_nascimento' => $data->data_nascimento,          
+            'data_nascimento' => $data->datanascimento,          
             'cpf' => $data->cpf,
-            'senha' => $data->senha
+            'senha_aluno' => $data->senha
         ];
+     
         $query = SQL_CREATE_USER();           
         $conexao->beginTransaction();
         $con = ValidConnection::isValidConnection($conexao, $query, $params);
