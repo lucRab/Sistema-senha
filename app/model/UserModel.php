@@ -24,7 +24,7 @@ class UserModel {
             'nome_aluno' => $data->nome_aluno, 
             'data_nascimento' => $data->datanascimento,          
             'cpf' => $data->cpf,
-            'senha_aluno' => $data->senha
+            'senha_login' => $data->senha
         ];
      
         $query = SQL_CREATE_USER();           

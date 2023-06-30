@@ -33,11 +33,35 @@ class CoursesController {
         $course = strtoupper($data['course']);
         $dataCourse = CoursesModel::getCourseModel($course);
         $days = self::getCourseDays($course);
-        // if (!sizeof($days)) self::$teste->redirect('/error');
-        var_dump($dataCourse);
+        if (!$_SESSION) self::$teste->redirect('/login');
+        if (!sizeof($days)) self::$teste->redirect('/error');
+        $src = self::xpathImage($course);
         $firstDay = $days[0]->nome_dia;
         $shifts = self::getCourseShifts($course, $firstDay);
+
+        ob_start();
+        require_once __DIR__."/../view/fragments/infosCourse.php";
+        $infosCourse = ob_get_clean();
+
+        ob_start();
+        require_once __DIR__."/../view/fragments/getPassword.php";
+        $fragment = ob_get_clean();
+
+        var_dump($dataCourse);
         require_once __DIR__."/../view/course/course.php";
+    }
+
+    public static function xpathImage($course) 
+    {
+        $getImage = 0;
+        if (str_contains($course, "_")) {
+            $course = strtolower(explode("_", $course)[0]);
+            $getImage = 1;
+        }
+        $httpClient = new \simplehtmldom\HtmlWeb();
+        $response = $httpClient->load('https://www.istockphoto.com/br/search/2/image?ageofpeople=teenager%2Cchild%2Cadult%2Cyoungadult&phrase='.$course);
+        $img = $response->find('html body .DW8dMUa97kDDTC1CKQwe picture img')[$getImage]->src;
+        return $img;
     }
 
 }

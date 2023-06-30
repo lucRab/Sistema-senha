@@ -53,13 +53,13 @@ class ClassesController
  
         if (self::maxQuantPasswords()) {
             http_response_code(404);
-            echo json_encode("Já pegou mt senha");
+            echo json_encode("Máximo de 1 senha por dia");
             die();
         }
 
         $infosClass = new \stdClass();
         $infosClass->courseName = $course;
-        $infosClass->age = $age;
+        $infosClass->age = $_SESSION['idade'];
         $infosClass->shift = $shift;
         $infosClass->days = $days;
         $dataClass = \App\model\ClassesModel::filterClassesModel($infosClass); 

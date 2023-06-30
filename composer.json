@@ -6,9 +6,15 @@
       "Core\\": "core/"
     }
   },
+  "config": {
+    "platform-check": false
+  },
   "require": {
     "firebase/php-jwt": "^6.8",
     "coffeecode/router": "^2.0",
-    "vlucas/phpdotenv": "^5.5"
-  }
+    "vlucas/phpdotenv": "^5.5",
+    "simplehtmldom/simplehtmldom": "^2.0@RC"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
