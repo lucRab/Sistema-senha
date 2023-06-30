@@ -6,8 +6,9 @@ class HistoryController
 {
     public static function getPasswords()
     {
-        $cod_aluno = 1;
-        $allPasswords = HistoryModel::getPasswordsModel();
+        $cod_aluno = $_SESSION['id_usuario'];
+        $allPasswords = HistoryModel::getPasswordsModel($cod_aluno);
+        var_dump($cod_aluno);
         require_once __DIR__."/../view/historyPasswords.php";     
     }
 
@@ -15,8 +16,9 @@ class HistoryController
     public static function deletePassword()
     {
         $dataRequest = json_decode(file_get_contents('php://input'), true);
+        $cod_aluno = $_SESSION['id_usuario'];
         $cod_senha = 1;
-        $deletePassword = HistoryModel::deletePasswordModel();
+        $deletePassword = HistoryModel::deletePasswordModel($cod_aluno);
         echo json_encode($deletePassword);
     }
 

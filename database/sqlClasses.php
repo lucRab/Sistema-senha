@@ -57,8 +57,8 @@
   
   function SQL_CREATE_USER() {
     return "INSERT INTO aluno(
-    nome_aluno, data_nascimento, cpf, senha_aluno)               
-    VALUES(:nome_aluno, :data_nascimento, :cpf, :senha_aluno)";
+    nome_aluno, data_nascimento, cpf, senha_login)               
+    VALUES(:nome_aluno, :data_nascimento, :cpf, :senha_login)";
   }
 
   function SQL_GET_USER() {
@@ -78,7 +78,7 @@
   }
 
   function SQL_UPDATE_PASSWORD_USER() {
-    return "UPDATE senha SET cod_aluno = :cod_aluno, data_atualizado = :data_atualizado WHERE cod_senha = :cod_senha";
+    return "UPDATE senha SET cod_aluno = :cod_aluno, data_atualizado = :data_atualizado, situacao = :situacao WHERE cod_senha = :cod_senha";
   }
 
   function SQL_GET_USER_PASSWORDS() {

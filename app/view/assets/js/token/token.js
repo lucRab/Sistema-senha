@@ -43,7 +43,7 @@ export const requestTokenRegister = async () => {
   console.log(json);
   if (response.status === 200) {
     localStorage.setItem('token', json);
-    window.location.replace('http://localhost/Sistema-senha/');
+    window.location.replace('http://localhost/Sistema-Senha/');
     console.log(response);
   }
 };

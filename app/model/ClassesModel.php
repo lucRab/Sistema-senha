@@ -19,7 +19,7 @@ class ClassesModel
         $query = SQL_GET_USER_PASSWORDS();
         $params = [
             "data_hoje" => date("Y/m/d"),
-            "cod_aluno" => 1
+            "cod_aluno" => $_SESSION['id_usuario']
         ];
 
         $con = ValidConnection::isValidConnection($conexao, $query, $params);

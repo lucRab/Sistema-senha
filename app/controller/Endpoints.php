@@ -41,8 +41,9 @@ class Endpoints {
     $id = $dataRequest['id'];
     $cod_senha = $dataRequest['cod_senha'];
     $data = [
-      "cod_aluno" => 1,
-      "cod_senha" => 1,
+      "cod_aluno" => $_SESSION['id_usuario'],
+      "cod_senha" => $cod_senha,
+      "situacao" => "UTILIZADA",
       "data_atualizado" => date("Y/m/d")
     ];
     $updateUser = UserModel::updatePasswordUser($data);
@@ -66,7 +67,7 @@ class Endpoints {
     $userFound = $prepare->fetch();
 
     $payload = [
-        "exp" => time() + 99999,
+        "exp" => time() + 1000,
         "iat" => time(),
         "cpf" => $cpf,
         "senha" => $senha
@@ -87,16 +88,19 @@ class Endpoints {
     $data->cpf = $dataRequest['cpf'];
     $data->datanascimento = $dataRequest['data_nascimento'];
     $data->senha = $dataRequest['senha'];
-
+    
     $userId = UserModel::createUser($data);
+    $birth_date = date_create($data->datanascimento);
+    $current_date = date_create(date('Y-m-d'));
+    $diff = date_diff($birth_date, $current_date);
 
     $payload = [
-        "exp" => time() + 99999,
+        "exp" => time() + 1000,
         "iat" => time(),
         "id_usuario" => $userId,
         "nome" => $data->nome_aluno,
         "cpf" => $data->cpf,
-        "data_nascimento"=> $data->datanascimento
+        "idade"=>  $diff->format('%y')
     ];
 
     $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
@@ -118,6 +122,7 @@ class Endpoints {
         $_SESSION['nome'] = $decoded->nome;
         $_SESSION['cpf'] = $decoded->cpf;
         $_SESSION['id_usuario'] = $decoded->id_usuario;
+        $_SESSION['idade'] = $decoded->idade;
         echo json_encode($decoded);
     }catch(\Throwable $e){
         if($e->getMessage()=== 'Expired token') {
