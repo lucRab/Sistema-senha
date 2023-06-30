@@ -5,12 +5,13 @@ use App\model\UserModel;
 use Core\connection\Conexao;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Throwable;
 
 class Endpoints {
-  private static $router = null;
+  private static $route = null;
 
   public function __construct($router) {
-    self::$router = $router;
+    self::$route = $router;
   }
 
   public static function getAllShifts() {
@@ -57,23 +58,31 @@ class Endpoints {
     $cpf = $dataRequest['cpf'];
     $senha = $dataRequest['senha'];
 
+    
     $conxao = Conexao::conectar();
+    try{
+      if(gettype($conxao) == "object") {
+      
+        $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
+        $prepare->execute([
+            'cpf' => $cpf
+        ]);
+        $userFound = $prepare->fetch();
 
-    $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
-    $prepare->execute([
-        'cpf' => $cpf
-    ]);
-    $userFound = $prepare->fetch();
+        $payload = [
+            "exp" => time() + 10,
+            "iat" => time(),
+            "cpf" => $cpf,
+            "senha" => $senha
+        ];
 
-    $payload = [
-        "exp" => time() + 99999,
-        "iat" => time(),
-        "cpf" => $cpf,
-        "senha" => $senha
-    ];
-
-    $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
-    echo json_encode($encode);
+        $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
+        echo json_encode($encode);
+      }
+    }catch(Throwable $e) {
+      echo json_encode('Expired token');
+    }
+   
   }
 
   public static function setTokenCadastro() {
@@ -85,22 +94,32 @@ class Endpoints {
     $data = new \stdClass;
     $data->nome_aluno = $dataRequest['nome'];
     $data->cpf = $dataRequest['cpf'];
-    $data->datanascimento = $dataRequest['data_nascimento'];
+    $data->data_nascimento = $dataRequest['data_nascimento'];
     $data->senha = $dataRequest['senha'];
 
-    $userId = UserModel::createUser($data);
 
-    $payload = [
-        "exp" => time() + 99999,
-        "iat" => time(),
-        "id_usuario" => $userId,
-        "nome" => $data->nome_aluno,
-        "cpf" => $data->cpf,
-        "data_nascimento"=> $data->datanascimento
-    ];
+    $insert = UserModel::createUser($data);
 
-    $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
-    echo json_encode($encode);
+    if(gettype($insert) == "integer") {
+      $payload = [
+          "exp" => time() + 9999999,
+          "iat" => time(),
+          "nome" => $data->nome_aluno,
+          "cpf" => $data->cpf,
+          "datanascimento"=> $data->data_nascimento,
+          "id" => $insert
+      ];
+
+      $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
+      echo json_encode($encode);
+    }else {
+      if($insert == "ERROR: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined") {
+        echo json_encode("[ATEÇÃO] Erro ao tentar cadastrar");
+      }else{
+        //var_dump(gettype($insert));
+        echo json_encode("[ATENÇÃO] Erro ao conectar com banco de dados");
+      }
+    }
   }
 
   public static function authToken() {
@@ -115,15 +134,12 @@ class Endpoints {
  
     try{
         $decoded = JWT ::decode($token,new Key($_ENV['KEY'],'HS512'));
-        $_SESSION['nome'] = $decoded->nome;
         $_SESSION['cpf'] = $decoded->cpf;
-        $_SESSION['id_usuario'] = $decoded->id_usuario;
         echo json_encode($decoded);
     }catch(\Throwable $e){
         if($e->getMessage()=== 'Expired token') {
             //http_response_code(401);
             session_destroy();
-            http_response_code(401);
             echo json_encode('Expired token');
         }
     }

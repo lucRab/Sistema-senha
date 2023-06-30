@@ -9,13 +9,16 @@ export const requestTokenLogin = async () => {
     },
     body: JSON.stringify({ cpf: cpf, senha: senha }),
   });
-  const json = await response.json();
+  //const json = await response.json();
   //console.log(response.status);
-
-  if (response.status === 200) {
-    localStorage.setItem('token', json);
-    window.location.replace('http://localhost/Sistema-senha/');
-    console.log(response);
+  if (typeof response == "string") {
+    alert(response);
+  }else {
+    if (response.status === 200) {
+      localStorage.setItem('token', json);
+      window.location.replace('http://localhost/Sistema-senha/');
+      console.log(response);
+    }
   }
 };
 
@@ -40,11 +43,15 @@ export const requestTokenRegister = async () => {
     }),
   });
   const json = await response.json();
-  console.log(json);
-  if (response.status === 200) {
-    localStorage.setItem('token', json);
-    window.location.replace('http://localhost/Sistema-senha/');
-    console.log(response);
+  //console.log(response);
+  if (typeof response == "string") {
+    alert(json);
+  }else {
+    if (response.status === 200) {
+      localStorage.setItem('token', json);
+      window.location.replace('http://localhost/Sistema-senha/');
+      console.log(response);
+    }
   }
 };
 

@@ -13,9 +13,10 @@ class CoursesModel
 
     public static function getAllCoursesModel()
     {
+        $param = null;
         $conexao = Conexao::conectar();
         $query = SQL_SELECT_COURSES();
-        $con = validConnection::isValidConnection($conexao, $query);
+        $con = validConnection::isValidConnection($conexao, $query,$param);
         $allCourses = $con->fetchAll(PDO::FETCH_OBJ);
         return $allCourses;
     }
@@ -25,7 +26,7 @@ class CoursesModel
         $query = SQL_AVAILABLE_COURSE_DAYS($condition);
         $params = [
             "course" => $course,
-            'idade' => '10'
+            'idade' => '15'
         ];
         $con = validConnection::isValidConnection($conexao, $query, $params);
         $dataDays = $con->fetchAll(PDO::FETCH_OBJ);
@@ -38,7 +39,7 @@ class CoursesModel
         $params = [
             "course" => $course,
             "dayName" => $day,
-            'idade' => '10'
+            'idade' => '15'
         ];
         $con = validConnection::isValidConnection($conexao, $query, $params);
         $dataShifts = $con->fetchAll(PDO::FETCH_OBJ);

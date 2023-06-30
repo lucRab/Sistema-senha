@@ -31,7 +31,7 @@ class CoursesController {
 
     public static function getCourse($data) {
         $course = strtoupper($data['course']);
-        $dataCourse = CoursesModel::getCourseModel($course);
+        $dataCourse = \App\model\CoursesModel::getCourseModel($course);
         $days = self::getCourseDays($course);
         // if (!sizeof($days)) self::$teste->redirect('/error');
         var_dump($dataCourse);

@@ -19,20 +19,34 @@ class UserModel {
      */
     public static function createUser($data) {
         $conexao = Conexao::conectar();
+    //Código da função
+        //instancia a conexão;
+        //recebe os dados e coloca em um array para executar a query
+        if(gettype($conexao) == "object" ){ 
+            $params = array(         
+                'nome_aluno' => $data->nome_aluno, 
+                'data_nascimento' => $data->data_nascimento,          
+                'cpf' => $data->cpf,
+                'senha' => $data->senha
+            );
+            //Query sql
+            
+            $query = SQL_CREATE_USER(); 
+                  
+            $con = ValidConnection::isValidConnection($conexao, $query, $params);
+            //
+            $id = $conexao->lastInsertId();
 
-        $params = [       
-            'nome_aluno' => $data->nome_aluno, 
-            'data_nascimento' => $data->datanascimento,          
-            'cpf' => $data->cpf,
-            'senha_aluno' => $data->senha
-        ];
-     
-        $query = SQL_CREATE_USER();           
-        $conexao->beginTransaction();
-        $con = ValidConnection::isValidConnection($conexao, $query, $params);
-        $id = $conexao->lastInsertId();
-        $conexao->commit();
-        return $id;
+            if(gettype($con) == "string") {
+                
+                return $con;
+            }else {
+                //exit(var_dump((int)$id));
+                return (int)$id;
+            }
+        }else{
+            return $conexao;
+        }
     }
     /**
      * Função para selecionar os dados do usuario
@@ -43,7 +57,7 @@ class UserModel {
         //recebe os dados e coloca em um array para executar a query
         $params = array('id' => $data->id);
         $query = SQL_GET_USER();
-        $con = \validConnection::isValidConnection($conexao, $query, $params);
+        $con = ValidConnection::isValidConnection($conexao, $query, $params);
         return $con;
     }
     /**
@@ -80,13 +94,6 @@ class UserModel {
          //Query sql
         $query = SQL_UPDATE_AGE_USER();
         $con = validConnection::isValidConnection($conexao, $query, $params);
-        return $con->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    public static function updatePasswordUser($params) {
-        $conexao = Conexao::conectar();
-        $query = SQL_UPDATE_PASSWORD_USER();
-        $con = ValidConnection::isValidConnection($conexao, $query, $params);
         return $con->fetchAll(PDO::FETCH_OBJ);
     }
 }

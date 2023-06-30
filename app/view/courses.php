@@ -1,9 +1,3 @@
-<?php 
-
-  var_dump($_SESSION);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,8 +11,20 @@
 <body>
   <h1>cursos</h1>
 
-  <script type="module" src="app/view/assets/js/loadingLogin.js"></script>
-
+  <script>
+  const teste = async () => {
+    const token = localStorage.getItem('token')
+    const response = await fetch('http://localhost/Sistema-Senha/json/token/verificar', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+    const json = await response.json()
+    console.log(json);
+  }
+  teste()
+  </script>
 </body>
 
 </html>
