@@ -38,7 +38,6 @@ class Endpoints {
     setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     date_default_timezone_set('America/Sao_Paulo');
     $dataRequest = json_decode(file_get_contents('php://input'), true);
-    $id = $dataRequest['id'];
     $cod_senha = $dataRequest['cod_senha'];
     $data = [
       "cod_aluno" => $_SESSION['id_usuario'],
