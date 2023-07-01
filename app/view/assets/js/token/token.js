@@ -1,7 +1,7 @@
 export const requestTokenLogin = async () => {
   const cpf = document.querySelector('#cpf_login').value;
   const senha = document.querySelector('#senha_login').value;
-
+  const alerta = document.querySelector('#alerta');
   const response = await fetch('http://localhost/Sistema-Senha/json/token/login', {
     method: 'POST',
     headers: {
@@ -11,11 +11,18 @@ export const requestTokenLogin = async () => {
   });
   const json = await response.json();
   //console.log(response.status);
-
-  if (response.status === 200) {
-    localStorage.setItem('token', json);
-    window.location.replace('http://localhost/Sistema-senha/');
-    console.log(response);
+  if(!response.ok) {
+    if(response.status === 404){
+      alerta.innerText = json;
+    }else {
+      alert(json);
+    }
+    }else {
+    if (response.status === 200) {
+      localStorage.setItem('token', json);
+      //window.location.replace('http://localhost/Sistema-senha/');
+      console.log(response.json);
+    }
   }
 };
 
@@ -39,12 +46,17 @@ export const requestTokenRegister = async () => {
       senha: senha,
     }),
   });
+  console.log(response);
   const json = await response.json();
-  console.log(json);
-  if (response.status === 200) {
-    localStorage.setItem('token', json);
-    window.location.replace('http://localhost/Sistema-Senha/');
-    console.log(response);
+  //
+  if(!response.ok) {
+    alert(json);
+  }else {
+    if (response.status === 200) {
+      localStorage.setItem('token', json);
+      window.location.replace('http://localhost/Sistema-Senha/');
+      console.log(json);
+    }
   }
 };
 

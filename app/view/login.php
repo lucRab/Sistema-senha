@@ -41,7 +41,8 @@
           <p>
             <input type="submit" class="btn-sub" value="Logar" disabled />
           </p>
-
+          <div id="alerta">
+          </div>
           <p class="link">
             Sem conta?
             <a href="login/cadastro">Cadastre-se</a>

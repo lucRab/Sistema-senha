@@ -59,22 +59,38 @@ class Endpoints {
     $senha = $dataRequest['senha'];
 
     $conxao = Conexao::conectar();
+    if(gettype($conxao) == "object") {
 
-    $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
-    $prepare->execute([
-        'cpf' => $cpf
-    ]);
-    $userFound = $prepare->fetch();
+      $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf and senha_login = :senha");
+      $prepare->execute([
+          'cpf' => $cpf,
+          'senha' =>$senha
+      ]);
+      $userFound = $prepare->fetch();
+      if($cpf = $userFound){
+        if($senha = $userFound){
+          $payload = [
+              "exp" => time() + 1000,
+              "iat" => time(),
+              "cpf" => $cpf,
+              "senha" => $senha
+          ];
 
-    $payload = [
-        "exp" => time() + 1000,
-        "iat" => time(),
-        "cpf" => $cpf,
-        "senha" => $senha
-    ];
-
-    $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
-    echo json_encode($encode);
+          $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
+          echo json_encode($encode);
+        }else {
+          http_response_code(404);
+          echo json_encode("Senha Incorreta");
+        }
+      }else {
+        http_response_code(404);
+        echo json_encode("Cpf não costa na base de dados");
+      }
+    }else {
+        http_response_code(500);
+        echo json_encode("[ATEÇÃO]
+        [ERROR: 2002] Erro de conexão com o banco de dados");
+    }
   }
 
   public static function setTokenCadastro() {
@@ -86,25 +102,37 @@ class Endpoints {
     $data = new \stdClass;
     $data->nome_aluno = $dataRequest['nome'];
     $data->cpf = $dataRequest['cpf'];
-    $data->datanascimento = $dataRequest['data_nascimento'];
+    $data->data_nascimento = $dataRequest['data_nascimento'];
     $data->senha = $dataRequest['senha'];
     
     $userId = UserModel::createUser($data);
-    $birth_date = date_create($data->datanascimento);
-    $current_date = date_create(date('Y-m-d'));
-    $diff = date_diff($birth_date, $current_date);
+    if(gettype($userId) == "integer") {
+      $birth_date = date_create($data->data_nascimento);
+      $current_date = date_create(date('Y-m-d'));
+      $diff = date_diff($birth_date, $current_date);
 
-    $payload = [
-        "exp" => time() + 1000,
-        "iat" => time(),
-        "id_usuario" => $userId,
-        "nome" => $data->nome_aluno,
-        "cpf" => $data->cpf,
-        "idade"=>  $diff->format('%y')
-    ];
+      $payload = [
+          "exp" => time() + 1000,
+          "iat" => time(),
+          "id_usuario" => $userId,
+          "nome" => $data->nome_aluno,
+          "cpf" => $data->cpf,
+          "idade"=>  $diff->format('%y')
+      ];
 
-    $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
-    echo json_encode($encode);
+      $encode = JWT::encode($payload,$_ENV['KEY'],'HS512');
+      echo json_encode($encode);
+    }else {
+      if($userId == 2002) {
+        http_response_code(404);
+        echo json_encode("[ATEÇÃO]
+        [ERROR: 2002] Erro de conexão com o banco de dados");
+      }else {
+        http_response_code(404);
+        echo json_encode("[ATENÇÃO]
+        [ERROR: 42S22] Erro ao tentar cadastrar");
+      }
+    }
   }
 
   public static function authToken() {

@@ -19,20 +19,34 @@ class UserModel {
      */
     public static function createUser($data) {
         $conexao = Conexao::conectar();
+    //Código da função
+        //instancia a conexão;
+        //recebe os dados e coloca em um array para executar a query
+        if(gettype($conexao) == "object"){ 
+            $params = [
+                'nome_aluno' => $data->nome_aluno, 
+                'data_nascimento' => $data->data_nascimento,          
+                'cpf' => $data->cpf,
+                'senha_login' => $data->senha
+            ];
+            //Query sql
+            $query = SQL_CREATE_USER();
 
-        $params = [       
-            'nome_aluno' => $data->nome_aluno, 
-            'data_nascimento' => $data->datanascimento,          
-            'cpf' => $data->cpf,
-            'senha_login' => $data->senha
-        ];
-     
-        $query = SQL_CREATE_USER();           
-        $conexao->beginTransaction();
-        $con = ValidConnection::isValidConnection($conexao, $query, $params);
-        $id = $conexao->lastInsertId();
-        $conexao->commit();
-        return $id;
+            $conexao->beginTransaction();
+            //executa a query
+            $con = ValidConnection::isValidConnection($conexao, $query, $params);
+            //recebe o id do usuario inserido no banco de dados
+            $id = $conexao->lastInsertId();
+            $conexao->commit();
+
+            if(gettype($con) == "object"){
+                return (int)$id;
+            }else {
+                return $con;
+            }
+        }else {
+             return $conexao;  
+        }
     }
     /**
      * Função para selecionar os dados do usuario
