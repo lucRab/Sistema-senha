@@ -57,11 +57,11 @@ export const requestTokenRegister = async () => {
     alert(json);
     }
   }else {
-    if (response.status === 200) {
+   // if (response.status === 200) {
       localStorage.setItem('token', json);
-      //window.location.replace('http://localhost/Sistema-Senha/');
+      window.location.replace('http://localhost/Sistema-Senha/');
       console.log(json);
-    }
+   // }
   }
 };
 

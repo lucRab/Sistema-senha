@@ -56,7 +56,7 @@ class Endpoints {
     
     $dataRequest = json_decode(file_get_contents('php://input'), true);
     $cpf = $dataRequest['cpf'];
-    $senha = $dataRequest['senha'];
+    $senha = md5($dataRequest['senha']);
 
     $conxao = Conexao::conectar();
     if(gettype($conxao) == "object") {
@@ -71,7 +71,7 @@ class Endpoints {
           echo json_encode("CPF não registrado");
           die();
         }
-        if(password_verify($senha, $userFound['senha_login'])){
+        if($senha == $userFound['senha_login']){
           $payload = [
               "exp" => time() + 1000,
               "iat" => time(),
@@ -102,11 +102,11 @@ class Endpoints {
     $data->nome_aluno = $dataRequest['nome'];
     $data->cpf = $dataRequest['cpf'];
     $data->data_nascimento = $dataRequest['data_nascimento'];
-    $data->senha = password_hash($dataRequest['senha'], PASSWORD_ARGON2I);
+    $data->senha = md5($dataRequest['senha']);
 
-    $teste = UserModel::getUserCpf($data);
-    $userFound = $teste->fetch();
-    if(!$teste = null) {
+    $verificar = UserModel::getUserCpf($data);
+    $userFound = $verificar->fetch();
+    if(!$userFound == null) {
       http_response_code(403);
       echo json_encode("Este CPf já estar cadastrado");
       die();
