@@ -11,7 +11,7 @@ class Conexao {
       try {
         self::$conn = new PDO('mysql:host=localhost;dbname=atende;charset=utf8', 'root', '');
         self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      } catch(PDOException $e) {
+      } catch(\PDOException $e) {
         self::$conn = $e->getMessage();
       }
     }  

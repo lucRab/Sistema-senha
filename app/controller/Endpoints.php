@@ -38,6 +38,7 @@ class Endpoints {
     setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     date_default_timezone_set('America/Sao_Paulo');
     $dataRequest = json_decode(file_get_contents('php://input'), true);
+    $id = $dataRequest['id'];
     $cod_senha = $dataRequest['cod_senha'];
     $data = [
       "cod_aluno" => $_SESSION['id_usuario'],
@@ -60,14 +61,17 @@ class Endpoints {
     $conxao = Conexao::conectar();
     if(gettype($conxao) == "object") {
 
-      $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf and senha_login = :senha");
+      $prepare = $conxao->prepare("SELECT * from aluno where cpf = :cpf");
       $prepare->execute([
           'cpf' => $cpf,
-          'senha' =>$senha
       ]);
       $userFound = $prepare->fetch();
-      if($cpf = $userFound){
-        if($senha = $userFound){
+        if(!$userFound) {
+          http_response_code(404);
+          echo json_encode("CPF não registrado");
+          die();
+        }
+        if(password_verify($senha, $userFound['senha_login'])){
           $payload = [
               "exp" => time() + 1000,
               "iat" => time(),
@@ -81,10 +85,6 @@ class Endpoints {
           http_response_code(404);
           echo json_encode("Senha Incorreta");
         }
-      }else {
-        http_response_code(404);
-        echo json_encode("Cpf não costa na base de dados");
-      }
     }else {
         http_response_code(500);
         echo json_encode("[ATEÇÃO]
@@ -102,8 +102,15 @@ class Endpoints {
     $data->nome_aluno = $dataRequest['nome'];
     $data->cpf = $dataRequest['cpf'];
     $data->data_nascimento = $dataRequest['data_nascimento'];
-    $data->senha = $dataRequest['senha'];
-    
+    $data->senha = password_hash($dataRequest['senha'], PASSWORD_ARGON2I);
+
+    $teste = UserModel::getUserCpf($data);
+    $userFound = $teste->fetch();
+    if(!$teste = null) {
+      http_response_code(403);
+      echo json_encode("Este CPf já estar cadastrado");
+      die();
+    }
     $userId = UserModel::createUser($data);
     if(gettype($userId) == "integer") {
       $birth_date = date_create($data->data_nascimento);

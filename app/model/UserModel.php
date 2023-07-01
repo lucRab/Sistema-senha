@@ -57,7 +57,7 @@ class UserModel {
         //recebe os dados e coloca em um array para executar a query
         $params = array('id' => $data->id);
         $query = SQL_GET_USER();
-        $con = \validConnection::isValidConnection($conexao, $query, $params);
+        $con = ValidConnection::isValidConnection($conexao, $query, $params);
         return $con;
     }
     /**
@@ -102,6 +102,15 @@ class UserModel {
         $query = SQL_UPDATE_PASSWORD_USER();
         $con = ValidConnection::isValidConnection($conexao, $query, $params);
         return $con->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public static function getUserCpf($data) {
+        //recebe os dados e coloca em um aray para executar a query
+        $conexao = Conexao::conectar();
+        $params = array('cpf' => $data->cpf);
+        $query = SQL_GET_USER_CPF();
+        $con = ValidConnection::isValidConnection($conexao, $query, $params);
+        return $con;
     }
 }
  

@@ -40,6 +40,8 @@
           <p>
             <input type="submit" disabled value="Cadastrar" />
           </p>
+          <div id="alerta">
+          </div>
           <p class="link">
             Possui conta?
             <a href="../login"> Ir para Login </a>

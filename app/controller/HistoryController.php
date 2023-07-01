@@ -8,7 +8,7 @@ class HistoryController
     {
         $cod_aluno = $_SESSION['id_usuario'];
         $allPasswords = HistoryModel::getPasswordsModel($cod_aluno);
-        var_dump($allPasswords);
+        var_dump($cod_aluno);
         require_once __DIR__."/../view/historyPasswords.php";     
     }
 
