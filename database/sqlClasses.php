@@ -94,7 +94,7 @@
   }
 
   function SQL_SELECT_PASSWORDS(){
-    return "SELECT * FROM senha WHERE cod_aluno = :cod_aluno";
+    return "SELECT s.autenticacao, DATE_FORMAT(s.validade, '%d/%m/%Y') as validade, s.cod_senha FROM senha s WHERE cod_aluno = :cod_aluno";
   }
 
   function SQL_DELETE_PASSWORD() {
