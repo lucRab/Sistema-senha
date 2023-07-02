@@ -1,59 +1,88 @@
 import { requestDays, days, shift } from './course.js';
 const btn = document.getElementById('btn');
 const error = document.querySelector('.error');
+const confirmRequest = document.querySelector('.c-confirm');
+
 const course = window.location.href.split('/');
 const nameCourse = course[course.length - 1];
 let timeout;
 
+const clearLabel = (element) => {
+  element.classList.remove('active');
+  btn.classList.remove('change');
+  element.innerText = '';
+};
+
+const loading = (loading) => {
+  if (loading) {
+    btn.innerText = 'Carregando...';
+    btn.disabled = true;
+  } else {
+    btn.innerText = 'Retirar Senha';
+    btn.disabled = false;
+  }
+};
+
 export default function requestClass() {
   const handleClick = async () => {
-    console.log(days, shift);
     if (days && shift) {
-      const response = await fetch(`http://localhost/Sistema-Senha/curso/${nameCourse}`, {
+      loading(true);
+      try {
+        const response = await fetch(
+          `http://localhost/Sistema-Senha/curso/${nameCourse}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ shift: shift, days: days }),
+          },
+        );
+        const json = await response.json();
+        if (!response.ok) throw new Error(json);
+        updatePassword(json.password.cod_senha);
+      } catch (err) {
+        loading(false);
+        clearTimeout(timeout);
+        confirmRequest.classList.remove('active');
+        error.classList.add('active');
+        error.innerText = err;
+        btn.classList.add('change');
+        timeout = setTimeout(() => {
+          clearLabel(error);
+        }, 2000);
+      }
+    }
+  };
+
+  const updatePassword = async (cod_senha) => {
+    loading(true);
+    try {
+      const response = await fetch('http://localhost/Sistema-Senha/json/senha', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ shift: shift, days: days }),
+        body: JSON.stringify({ cod_senha }),
       });
-      console.log(response);
       const json = await response.json();
-      console.log(json);
-      if (response.ok) {
-        updatePassword(json.password.cod_senha);
-      } else {
-        clearTimeout(timeout);
-        error.classList.add('active');
-        error.innerText = `Error: ${json}`;
-        btn.classList.add('change');
-        timeout = setTimeout(errorRequest, 2000);
-      }
-    } else {
-      alert('n foi selecionado');
+      if (!response.ok) throw new Error('Erro ao retirar senha');
+      confirmRequest.classList.add('active');
+    } catch (error) {
+      confirmRequest.classList.add('active');
+      confirmRequest.style.background = '#e54';
+      confirmRequest.innerText = 'Erro ao retirar senha';
+      console.log(error);
+    } finally {
+      loading(false);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        clearLabel(confirmRequest);
+      }, 5000);
     }
-  };
-
-  const errorRequest = () => {
-    setTimeout(() => {
-      error.classList.remove('active');
-      btn.classList.remove('change');
-      error.innerText = '';
-    }, 2000);
-  };
-
-  const updatePassword = async (cod_senha) => {
-    const response = await fetch('http://localhost/Sistema-Senha/json/senha', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ cod_senha }),
-    });
-    const json = await response.json();
-    console.log(response);
-    console.log(json);
   };
 
   btn.addEventListener('click', handleClick);
 }
+
 requestDays();

@@ -65,7 +65,7 @@ class Endpoints
             $dataUser = ValidConnection::isValidConnection($conxao, $query, $params);
 
             $userFound = $dataUser->fetchAll(PDO::FETCH_OBJ);
-
+ 
             if (empty($userFound)) {
               http_response_code(404);
               echo json_encode("CPF não consta na base de dados");

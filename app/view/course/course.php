@@ -12,7 +12,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../app/view/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../app/view/assets/css/all.min.css">
+  <link rel="stylesheet" href="../app/view/assets/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="../app/view/assets/css/templatemo-style.css">
   <title>Document</title>
 </head>
@@ -64,12 +64,16 @@
   </div>
 
   <div class="container-fluid tm-container-content tm-mt-60">
+    <div class="c-confirm">
+      <p>Senha adquirida</p>
+      <a href="">Mais informações</a>
+    </div>
     <div class="row mb-4">
       <h2 class="col-12 tm-text-primary"><?= ucwords(mb_strtolower($dataCourse[0]->nome_curso)) ?></h2>
     </div>
     <div class="row tm-mb-90">
       <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
-        <img src="<?= $src ?>" alt="Image" class="img-fluid">
+        <img src="<?= $src ?>" width="700" height="400" alt="Image" class="img-fluid">
       </div>
       <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
         <div class="tm-bg-gray tm-video-details">
@@ -215,9 +219,9 @@
 
         </div>
       </div>
-
     </div>
   </footer>
+
   <script src="../app/view/assets/js/token/authToken.js"></script>
   <script type="module" src="../app/view/assets/js/script.js"></script>
 </body>

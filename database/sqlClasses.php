@@ -15,7 +15,7 @@
     INNER JOIN dia d on t.dias_de_aula = d.id_dia
     AND s.situacao = 'DISPONIVEL'
     AND s.validade BETWEEN '2023-01-01' AND '2023-12-31'
-    AND c.nome_curso = '{$courseName}'
+    AND c.slug = '{$courseName}'
     WHERE t.situacao = 'ABERTA'
     AND t.cod_periodo_letivo = (SELECT max(t.cod_periodo_letivo) from turma)
     {$conditions}
@@ -33,7 +33,7 @@
     INNER JOIN dia d on t.dias_de_aula = d.id_dia 
     AND s.situacao = 'DISPONIVEL' 
     AND s.validade BETWEEN '2023-01-01' AND '2023-12-31' 
-    AND c.nome_curso = :course 
+    AND c.slug = :course 
     AND :idade BETWEEN idade_minima AND idade_maxima
     AND t.situacao = 'ABERTA'
     WHERE t.cod_periodo_letivo = (SELECT max(t.cod_periodo_letivo) from turma)
@@ -47,7 +47,7 @@
     INNER JOIN senha s on t.cod_turma = s.cod_turma
     AND s.situacao = 'DISPONIVEL' 
     AND s.validade BETWEEN '2023-01-01' AND '2023-12-31' 
-    AND c.nome_curso = :course
+    AND c.slug = :course
     AND t.dias_de_aula = (SELECT dia.id_dia FROM dia WHERE dia.nome_dia = :dayName)
     AND :idade BETWEEN idade_minima AND idade_maxima
     WHERE t.situacao = 'ABERTA'
@@ -89,8 +89,16 @@
     return "SELECT cod_senha FROM `senha` WHERE data_atualizado = :data_hoje AND cod_aluno = :cod_aluno";
   }
 
-  function SQL_SELECT_COURSES(){
-    return "SELECT * FROM curso";
+  function SQL_SELECT_COURSES($condition = null){
+    return "SELECT DISTINCT c.nome_curso, c.slug FROM modulo m 
+    INNER JOIN turma t on m.cod_modulo = t.cod_modulo 
+    INNER JOIN curso c on m.cod_curso = c.cod_curso 
+    INNER JOIN senha s on t.cod_turma = s.cod_turma 
+    AND s.situacao = 'DISPONIVEL' 
+    AND s.validade BETWEEN '2023-01-01' AND '2023-12-31' 
+    AND t.situacao = 'ABERTA'
+    {$condition}
+    WHERE t.cod_periodo_letivo = (SELECT max(t.cod_periodo_letivo) from turma);";
   }
 
   function SQL_SELECT_COURSE(){
