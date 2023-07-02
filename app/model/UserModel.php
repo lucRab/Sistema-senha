@@ -57,7 +57,7 @@ class UserModel {
         //recebe os dados e coloca em um array para executar a query
         $params = array('id' => $data->id);
         $query = SQL_GET_USER();
-        $con = \validConnection::isValidConnection($conexao, $query, $params);
+        $con = ValidConnection::isValidConnection($conexao, $query, $params);
         return $con;
     }
     /**
