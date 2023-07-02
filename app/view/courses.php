@@ -1,9 +1,3 @@
-<?php 
-
-  var_dump($_SESSION);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,13 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="app/view/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="app/view/assets/css/all.min.css">
+  <link rel="stylesheet" href="app/view/assets/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="app/view/assets/css/templatemo-style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
 <body>
   <!-- Page Loader -->
+  <section class="courses-content">
+    <div class="course-title">
+      <h1>Cursos disponíveis para você em <strong>2023</strong></h1>
+      <button class="close">X</button>
+    </div>
+    <input type="text" placeholder="Procurar..." class="filter-courses">
+    <?= $allCourses ?>
+  </section>
   <div id="loader-wrapper">
     <div id="loader"></div>
 
@@ -62,7 +63,7 @@
     </form>
   </div>
 
-  <div class="container-fluid tm-container-content tm-mt-60">
+  <div class="container-fluid tm-container-content tm-mt-60 d-flex flex-column">
     <div class="row mb-4">
       <h2 class="col-6 tm-text-primary">
         Turmas Abertas
@@ -121,86 +122,41 @@
           <span>11,402 views</span>
         </div>
       </div>
+    </div>
 
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img src="app/view/assets/imgs/img-01.jpg" alt="Image" class="img-fluid">
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Bateria</h2>
-            <a href="curso/bateria">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">24 Sep 2020</span>
-          <span>16,008 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img src="app/view/assets/imgs/img-02.jpg" alt="Image" class="img-fluid">
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Natação</h2>
-            <a href="curso/natação_escolinha">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">20 Sep 2020</span>
-          <span>12,860 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img src="app/view/assets/imgs/img-07.jpg" alt="Image" class="img-fluid">
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Robótica (lego)</h2>
-            <a href="curso/robotica_lego_">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">16 Sep 2020</span>
-          <span>10,900 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img src="app/view/assets/imgs/img-08.jpg" alt="Image" class="img-fluid">
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Pilates</h2>
-            <a href="curso/pilates">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">12 Sep 2020</span>
-          <span>11,300 views</span>
-        </div>
-      </div>
-
-
-      <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
-        <div class="container-fluid tm-container-small">
-          <div class="row">
-            <div class="col-lg-6 col-md-12 col-12 px-5 mb-5">
-              <h3 class="tm-text-primary mb-4 tm-footer-title">Endereço:</h3>
-              <p>Rua do Telegrafo, S/Nº, bairro do Natal, Camaçari - BA</p>
-              <p>Tel: (71)3644-9824</p>
-              <p>Funcionamento: Seg a Sex das 8h às 17h</p>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
-              <ul class="tm-social-links d-flex justify-content-end pl-0 mb-5">
-                <li class="mb-2"><a href="https://facebook.com"><i class="fab fa-facebook"></i></a></li>
-                <li class="mb-2"><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
-                <li class="mb-2"><a href="https://instagram.com"><i class="fab fa-instagram"></i></a></li>
-                <li class="mb-2"><a href="https://pinterest.com"><i class="fab fa-pinterest"></i></a></li>
-              </ul>
-
-            </div>
+    <button class="btn-more-courses">Mais Cursos</button>
+    <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
+      <div class="container-fluid tm-container-small">
+        <div class="row">
+          <div class="col-lg-6 col-md-12 col-12 px-5 mb-5">
+            <h3 class="tm-text-primary mb-4 tm-footer-title">Endereço:</h3>
+            <p>Rua do Telegrafo, S/Nº, bairro do Natal, Camaçari - BA</p>
+            <p>Tel: (71)3644-9824</p>
+            <p>Funcionamento: Seg a Sex das 8h às 17h</p>
           </div>
 
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
+            <ul class="tm-social-links d-flex justify-content-end pl-0 mb-5">
+              <li class="mb-2"><a href="https://facebook.com"><i class="fab fa-facebook"></i></a></li>
+              <li class="mb-2"><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
+              <li class="mb-2"><a href="https://instagram.com"><i class="fab fa-instagram"></i></a></li>
+              <li class="mb-2"><a href="https://pinterest.com"><i class="fab fa-pinterest"></i></a></li>
+            </ul>
+
+          </div>
         </div>
-      </footer>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-      <script src="app/view/assets/js/plugins/plugins.js"></script>
+
+      </div>
+    </footer>
+  </div>
+
+  <script src="app/view/assets/js/plugins/plugins.js"></script>
+  <script src="app/view/assets/js/courses.js"></script>
+  <script>
+  $(window).on("load", function() {
+    $('body').addClass('loaded');
+  });
+  </script>
 </body>
 
 </html>

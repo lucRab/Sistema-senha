@@ -14,6 +14,9 @@ class CoursesController {
     public static function getAllCourses() 
     {
         $courses = \App\model\CoursesModel::getAllCoursesModel();
+        ob_start();
+        require_once __DIR__."/../view/fragments/allCourses.php";
+        $allCourses = ob_get_clean();
         require_once __DIR__."/../view/courses.php";
     }
 
@@ -33,7 +36,6 @@ class CoursesController {
         $course = strtoupper($data['course']);
         $dataCourse = CoursesModel::getCourseModel($course);
         $days = self::getCourseDays($course);
-
         if (empty($_SESSION)) self::$router->redirect('/login');
         if (empty($dataCourse)) self::$router->redirect('/error');
         //Adicionar tela de idade errada
@@ -58,13 +60,13 @@ class CoursesController {
     {
         $getImage = 0;
         if (str_contains($course, "_")) {
-            $course = strtolower(explode("_", $course)[0]);
+            $course = strtolower(str_replace("_", "%20", $course));
             $getImage = 1;
         }
         $httpClient = new \simplehtmldom\HtmlWeb();
-        $response = $httpClient->load('https://www.istockphoto.com/br/search/2/image?ageofpeople=teenager%2Cchild%2Cadult%2Cyoungadult&phrase='.$course);
-        $img = $response->find('html body .DW8dMUa97kDDTC1CKQwe picture img')[$getImage]->src;
-        return $img;
+        $response = $httpClient->load("https://www.istockphoto.com/br/search/2/image?ageofpeople=teenager%2Cyoungadult%2Cchild%2Cadult&numberofpeople=two%2Cgroup&orientations=horizontal&phrase=$course&sort=best");
+        $img = $response->find('html body .DW8dMUa97kDDTC1CKQwe picture img')[0]->src;
+        return $img ?: 'https://destaque1.com/wp-content/uploads/2021/08/Cidade-do-Saber-espelhado_Foto-HyagoCerqueira.jpeg';
     }
 
 }

@@ -14,7 +14,12 @@ class CoursesModel
     public static function getAllCoursesModel()
     {
         $conexao = Conexao::conectar();
-        $query = SQL_SELECT_COURSES();
+        $condition = null;
+        if ($_SESSION['idade']) {
+            $age = $_SESSION['idade'];
+            $condition = "AND '{$age}' BETWEEN idade_minima AND idade_maxima";
+        }
+        $query = SQL_SELECT_COURSES($condition);
         $con = validConnection::isValidConnection($conexao, $query);
         $allCourses = $con->fetchAll(PDO::FETCH_OBJ);
         return $allCourses;
