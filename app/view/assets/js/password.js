@@ -14,7 +14,7 @@ export default function requestClass() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ age: '10', shift: shift, days: days }),
+        body: JSON.stringify({ shift: shift, days: days }),
       });
       console.log(response);
       const json = await response.json();

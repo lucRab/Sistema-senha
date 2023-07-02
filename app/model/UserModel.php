@@ -39,7 +39,7 @@ class UserModel {
             $id = $conexao->lastInsertId();
             $conexao->commit();
 
-            if(gettype($con) == "object"){
+            if(gettype($con) == "object"){               
                 return (int)$id;
             }else {
                 return $con;
@@ -100,6 +100,15 @@ class UserModel {
     public static function updatePasswordUser($params) {
         $conexao = Conexao::conectar();
         $query = SQL_UPDATE_PASSWORD_USER();
+        $con = ValidConnection::isValidConnection($conexao, $query, $params);
+        return $con->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public static function getUserCpf($data) {
+        //recebe os dados e coloca em um aray para executar a query
+        $conexao = Conexao::conectar();
+        $params = array('cpf' => $data->cpf);
+        $query = SQL_GET_USER_CPF();
         $con = ValidConnection::isValidConnection($conexao, $query, $params);
         return $con->fetchAll(PDO::FETCH_OBJ);
     }

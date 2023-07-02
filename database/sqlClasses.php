@@ -65,6 +65,10 @@
     return "SELECT * FROM aluno Where cod_aluno = :id";
   }
 
+  function SQL_GET_USER_CPF() {
+    return "SELECT * FROM aluno Where cpf = :cpf";
+  }
+
   function SQL_UPDATE_USER() {
     return "UPDATE aluno SET nome_aluno = :nome, 
     data_nascimento = :data_nascimento, nome_pai = :nome_pai, nome_mae = :nome_mae, sexo = :sexo,

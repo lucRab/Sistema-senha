@@ -18,6 +18,8 @@
 </head>
 
 <body>
+  <div class="c-loader"></div>
+
   <!-- Page Loader -->
   <div id="loader-wrapper">
     <div id="loader"></div>
@@ -216,8 +218,7 @@
 
     </div>
   </footer>
-  <script src="js/plugins.js"></script>
-  <script type="module" src="../app/view/assets/js/loadingLogin.js"></script>
+  <script src="../app/view/assets/js/token/authToken.js"></script>
   <script type="module" src="../app/view/assets/js/script.js"></script>
 </body>
 

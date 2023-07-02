@@ -11,17 +11,15 @@ export const requestTokenLogin = async () => {
   });
   const json = await response.json();
   //console.log(response.status);
-  if(!response.ok) {
-    if(response.status === 404){
+  if (response.ok) {
+    localStorage.setItem('token', json);
+    window.location.replace('http://localhost/Sistema-Senha/');
+    console.log(json);
+  } else {
+    if (response.status === 404) {
       alerta.innerText = json;
-    }else {
+    } else {
       alert(json);
-    }
-    }else {
-    if (response.status === 200) {
-      localStorage.setItem('token', json);
-      //window.location.replace('http://localhost/Sistema-senha/');
-      console.log(response.json);
     }
   }
 };
@@ -31,6 +29,7 @@ export const requestTokenRegister = async () => {
   const cpf = document.querySelector('#cpf_cad').value;
   const data_nascimento = document.querySelector('#data_cad').value;
   const senha = document.querySelector('#senha_cad').value;
+  const alerta = document.querySelector('#alerta');
 
   console.log(nome, cpf);
 
@@ -49,9 +48,13 @@ export const requestTokenRegister = async () => {
   console.log(response);
   const json = await response.json();
   //
-  if(!response.ok) {
+  if (!response.ok) {
+    if (response.status === 403) {
+      alerta.innerText = json;
+      return null;
+    }
     alert(json);
-  }else {
+  } else {
     if (response.status === 200) {
       localStorage.setItem('token', json);
       window.location.replace('http://localhost/Sistema-Senha/');
