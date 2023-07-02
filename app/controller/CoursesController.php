@@ -4,10 +4,10 @@ use App\model\CoursesModel;
 
 class CoursesController {
 
-    private static $teste = '';
+    private static $router = '';
     public function __construct($router) 
     {
-        self::$teste = $router;
+        self::$router = $router;
     }
 
 
@@ -33,8 +33,12 @@ class CoursesController {
         $course = strtoupper($data['course']);
         $dataCourse = CoursesModel::getCourseModel($course);
         $days = self::getCourseDays($course);
-        if (!$_SESSION) self::$teste->redirect('/login');
-        if (!sizeof($days)) self::$teste->redirect('/error');
+
+        if (empty($_SESSION)) self::$router->redirect('/login');
+        if (empty($dataCourse)) self::$router->redirect('/error');
+        //Adicionar tela de idade errada
+        if (!sizeof($days)) self::$router->redirect('/historico');
+        
         $src = self::xpathImage($course);
         $firstDay = $days[0]->nome_dia;
         $shifts = self::getCourseShifts($course, $firstDay);
@@ -47,7 +51,6 @@ class CoursesController {
         require_once __DIR__."/../view/fragments/getPassword.php";
         $fragment = ob_get_clean();
 
-        var_dump($dataCourse);
         require_once __DIR__."/../view/course/course.php";
     }
 

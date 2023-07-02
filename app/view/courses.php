@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="app/view/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="app/view/assets/css/all.min.css">
   <link rel="stylesheet" href="app/view/assets/css/templatemo-style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
 <body>
@@ -198,9 +199,7 @@
 
         </div>
       </footer>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-      <script type="module" src="app/view/assets/js/loadingLogin.js"></script>
       <script src="app/view/assets/js/plugins/plugins.js"></script>
 </body>
 

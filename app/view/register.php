@@ -51,8 +51,8 @@
     </div>
   </div>
 
+  <script src="../app/view/assets/js/token/authToken.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script type="module" src="../app/view/assets/js/validations.js"></script>
   <script type="module" src="../app/view/assets/js/token/token.js"></script>
-  <script type="module" src="../app/view/assets/js/loadingLogin.js"></script>
 </body>

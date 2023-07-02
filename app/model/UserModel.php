@@ -39,7 +39,7 @@ class UserModel {
             $id = $conexao->lastInsertId();
             $conexao->commit();
 
-            if(gettype($con) == "object"){
+            if(gettype($con) == "object"){               
                 return (int)$id;
             }else {
                 return $con;
@@ -110,7 +110,7 @@ class UserModel {
         $params = array('cpf' => $data->cpf);
         $query = SQL_GET_USER_CPF();
         $con = ValidConnection::isValidConnection($conexao, $query, $params);
-        return $con;
+        return $con->fetchAll(PDO::FETCH_OBJ);
     }
 }
  

@@ -1,15 +1,25 @@
-const btn = document.querySelector('button');
+const btns = document.querySelectorAll('.btn');
+const content = document.querySelector('.content');
 
-const handleClick = async () => {
+const handleClick = async ({ target }) => {
+  const cod_senha = target.id;
+  const elementPassword = target.parentNode.parentNode;
+
   const response = await fetch('http://localhost/Sistema-Senha/historico/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ cod_senha: 1 }),
+    body: JSON.stringify({ cod_senha }),
   });
-  console.log(response);
-  console.log(await response.json());
+
+  if (response.ok) {
+    setTimeout(() => {
+      content.removeChild(elementPassword);
+    }, 200);
+  }
 };
 
-btn.addEventListener('click', handleClick);
+btns.forEach((btn) => {
+  btn.addEventListener('click', handleClick);
+});
