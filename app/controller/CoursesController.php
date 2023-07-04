@@ -20,8 +20,7 @@ class CoursesController {
         require_once __DIR__."/../view/courses.php";
     }
 
-    public static function getCourseDays($course) 
-    {
+    public static function getCourseDays($course) {
         $days = \App\model\CoursesModel::getCourseDaysModel($course);
         return $days;
     }

@@ -48,6 +48,10 @@
           <li class="nav-item">
             <a class="nav-link nav-link-3" href="historico">Histórico de Senhas</a>
           </li>
+          </li>
+          <li class = "nav-button">
+            <button class="nav-button nav-link-4" id="sair">Sair</button>
+          </li> 
 
         </ul>
       </div>

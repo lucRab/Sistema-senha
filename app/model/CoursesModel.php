@@ -15,7 +15,7 @@ class CoursesModel
     {
         $conexao = Conexao::conectar();
         $condition = null;
-        if (!empty($_SESSION['idade'])) {
+        if ($_SESSION['idade']) {
             $age = $_SESSION['idade'];
             $condition = "AND '{$age}' BETWEEN idade_minima AND idade_maxima";
         }
