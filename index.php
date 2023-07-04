@@ -43,6 +43,8 @@ $router->group('login');
 $router->get("/", "UserController:userLogin");
 $router->get("/cadastro", "UserController:createUser");
 $router->post("/", "UserController:createUser");
+$router->get("/atualizar", "UserController:updateSenha");
+$router->post("/atualizar", "UserController:updateSenha");
 
 /* 
   Endpoints
@@ -54,6 +56,7 @@ $router->post("/senha", "Endpoints:setUserPassword");
 $router->post("/token/login", "Endpoints:setTokenLogin");
 $router->post("/token/cadastro", "Endpoints:setTokenCadastro");
 $router->post("/token/verificar", "Endpoints:authToken");
+$router->post("/atualizar", "Endpoints:updateSenha");
 
 /* 
   Error
