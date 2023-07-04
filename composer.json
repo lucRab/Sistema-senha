@@ -13,7 +13,8 @@
     "firebase/php-jwt": "^6.8",
     "coffeecode/router": "^2.0",
     "vlucas/phpdotenv": "^5.5",
-    "simplehtmldom/simplehtmldom": "^2.0@RC"
+    "simplehtmldom/simplehtmldom": "^2.0@RC",
+    "dompdf/dompdf": "^2.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

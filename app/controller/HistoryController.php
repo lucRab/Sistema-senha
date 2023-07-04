@@ -1,6 +1,9 @@
 <?php
 namespace App\controller;
 use App\model\HistoryModel;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+  
 
 class HistoryController
 {
@@ -25,6 +28,23 @@ class HistoryController
 
     public static function downloadPassword()
     {
+        $options = new Options();
+        $options->setChroot(__DIR__);
+
+        $dompdf = new Dompdf($options);
+
+        ob_start();
+        require_once __DIR__."/../view/download.php";     
+
+        $dompdf->loadHtml(ob_get_clean());
+
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+      // Mostrar conteudo na tela
+        header('Content-type: application/pdf');
+        echo $dompdf->output();
 
     }
 
