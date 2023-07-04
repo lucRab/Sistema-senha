@@ -36,7 +36,6 @@ class ClassesController
 
         $course = strtoupper($data['course']);
         $shift = strtoupper($dataRequest['shift']);
-        $age = strtoupper($dataRequest['age']);
         $days = strtoupper($dataRequest['days']);
         
         if (!self::isCourseExist($course)) {
