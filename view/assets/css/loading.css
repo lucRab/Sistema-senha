@@ -1,0 +1,50 @@
+.c-loader.active {
+  animation: is-rotating 1s infinite;
+  border: 6px solid #e5e5e5;
+  border-radius: 50%;
+  border-top-color: #51d4db;
+  height: 50px;
+  width: 50px;
+}
+
+.c-confirm {
+  display: none;
+}
+
+.c-confirm.active {
+  display: flex;
+  align-items: center;
+  animation: move-up 0.8s forwards;
+  width: max-content;
+  background: #23aa45;
+  color: #fff;
+  gap: 1rem;
+  padding: 0.2rem 1.5rem;
+  position: fixed;
+  z-index: 100;
+  bottom: 10px;
+  transform: translateY(40px);
+  animation: move-up 0.3s forwards;
+}
+
+.c-confirm.active a {
+  font-size: 0.8rem;
+  text-decoration: underline;
+}
+
+.c-confirm.active p {
+  color: #fff;
+  margin: 0;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes move-up {
+  to {
+    transform: initial;
+  }
+}
