@@ -109,6 +109,16 @@
     return "SELECT s.autenticacao, DATE_FORMAT(s.validade, '%d/%m/%Y') as validade, s.cod_senha FROM senha s WHERE cod_aluno = :cod_aluno";
   }
 
+  function SQL_SELECT_PASSWORD(){
+    return "SELECT c.nome_curso, t.nome_turma, (SELECT dia.nome_dia FROM dia WHERE dia.id_dia = t.dias_de_aula) as dias_de_aula, DATE_FORMAT(t.data_inicio, '%d/%m/%Y') as data_inicio, DATE_FORMAT(t.data_termino, '%d/%m/%Y') as data_termino, t.hora_inicio, t.hora_termino, t.turno, t.idade_minima, t.idade_maxima, s.autenticacao, DATE_FORMAT(s.validade, '%d/%m/%Y') as validade FROM modulo m 
+    INNER JOIN turma t on m.cod_modulo = t.cod_modulo 
+    INNER JOIN senha s on t.cod_turma = s.cod_turma 
+    INNER JOIN curso c on m.cod_curso = c.cod_curso 
+   	WHERE s.autenticacao = :autenticacao
+    AND s.cod_aluno = :cod_aluno
+";
+  }
+
   function SQL_DELETE_PASSWORD() {
     return "UPDATE senha SET cod_aluno = null, situacao = 'DISPONIVEL' WHERE cod_aluno = :cod_aluno";
   }

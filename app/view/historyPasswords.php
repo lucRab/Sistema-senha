@@ -1,9 +1,3 @@
-<?php 
-
-var_dump($allPasswords);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +33,7 @@ var_dump($allPasswords);
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand gradient" href="index.html">
         <i class="fas fa-film mr-2"></i>
@@ -64,7 +58,7 @@ var_dump($allPasswords);
       </div>
     </div>
   </nav>
-  
+
   <section class="intro">
     <h1 class="container mb-3">Senhas</h1>
     <div class="bg-image">
@@ -108,9 +102,9 @@ var_dump($allPasswords);
                             </button>
                           </td>
                           <td>
-                            <button type="button" class="btn btn-primary btn-sm px-3">
-                              <i class="fa fa-file-o"></i>
-                            </button>
+                            <a href="historico/<?= $password->autenticacao ?>" class="btn btn-primary btn-sm px-3">
+                              <i class="fas fa-file"></i>
+                            </a>
                           </td>
                         </tr>
                         <?php
@@ -129,6 +123,7 @@ var_dump($allPasswords);
   </section>
 
   <script src="app/view/assets/js/deletePassword.js"></script>
+
 </body>
 
 </html>

@@ -9,7 +9,9 @@
 </head>
 
 <body>
-  <div class="c-loader"></div>
+  <div class="c-loader-bg">
+    <div class="c-loader"></div>
+  </div>
   <h1 class="gradient">Cidade do Saber</h1>
   <div class="container">
     <div class="content">
@@ -38,7 +40,7 @@
             <span class="error"></span>
           </p>
           <p>
-            <input type="submit" disabled value="Cadastrar" />
+            <input type="submit" value="Cadastrar" class="btn-sub" />
           </p>
           <div id="alerta">
           </div>

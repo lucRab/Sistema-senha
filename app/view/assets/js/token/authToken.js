@@ -1,4 +1,5 @@
 async function authToken() {
+  const loadingBg = document.querySelector('.c-loader-bg');
   const loading = document.querySelector('.c-loader');
   let loadingScreen = false;
   let json = null;
@@ -14,7 +15,10 @@ async function authToken() {
   const token = localStorage.getItem('token');
   try {
     loadingScreen = true;
-    if (loading) loading.classList.add('active');
+    if (loading) {
+      loadingBg.classList.add('active');
+      loading.classList.add('active');
+    }
     if (!token) throw new Error('Usuario nao verificado');
     const response = await fetch('http://localhost/Sistema-Senha/json/token/verificar', {
       method: 'POST',
@@ -32,7 +36,10 @@ async function authToken() {
     logoutUser();
   } finally {
     loadingScreen = false;
-    if (loading) loading.classList.remove('active');
+    if (loading) {
+      loadingBg.classList.remove('active');
+      loading.classList.remove('active');
+    }
     console.log(json);
     return json;
   }

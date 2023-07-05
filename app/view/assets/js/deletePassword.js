@@ -1,4 +1,4 @@
-const btns = document.querySelectorAll('.btn');
+const btns = document.querySelectorAll('.btn-danger');
 const content = document.querySelector('.content');
 
 const handleClick = async ({ target }) => {
@@ -14,12 +14,12 @@ const handleClick = async ({ target }) => {
   });
 
   if (response.ok) {
-    setTimeout(() => {
+    console.log(elementPassword);
+    if (content.hasChildNodes(elementPassword)) {
       content.removeChild(elementPassword);
-    }, 200);
+    }
   }
 };
-
 btns.forEach((btn) => {
   btn.addEventListener('click', handleClick);
 });
