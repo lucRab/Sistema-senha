@@ -31,6 +31,7 @@ async function authToken() {
     if (location.includes('login') || location.includes('registro')) {
       window.location.replace('/Sistema-Senha');
     }
+    updateEmail(json.email, json.id_usuario);
   } catch (error) {
     json = error;
     logoutUser();
@@ -40,9 +41,45 @@ async function authToken() {
       loadingBg.classList.remove('active');
       loading.classList.remove('active');
     }
-    console.log(json);
+    json;
     return json;
   }
 }
+
+const updateEmail = (email, id_usuario) => {
+  const updateContent = document.querySelector('.update-email-content');
+  if (updateContent) {
+    const form = updateContent.querySelector('form');
+    if (!email || email === 'Analise') {
+      updateContent.classList.add('active');
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const emailValue = event.target[0].value;
+        requestUpdateEmail(emailValue, id_usuario);
+        updateContent.classList.remove('active');
+      });
+    }
+  }
+};
+
+const requestUpdateEmail = async (emailValue, id_usuario) => {
+  try {
+    const response = await fetch('http://localhost/Sistema-Senha/login/atualizar/email', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: emailValue, cod_aluno: id_usuario }),
+    });
+    json = await response.json();
+    if (!response.ok) throw new Error('Sem permissão');
+  } catch (error) {
+    json = error;
+    logoutUser();
+  } finally {
+    json;
+    return json;
+  }
+};
 
 window.addEventListener('load', authToken);

@@ -1,10 +1,3 @@
-<?php 
-
-  var_dump($_SESSION);
-
-?>
-
-
 <!DOCTYPE html>
 
 <head>
@@ -37,8 +30,7 @@
             <span class="error"></span>
           </p>
           <p>
-            <input type="checkbox" name="manterlogado" id="manterlogado" value="" />
-            <label for="manterlogado">Manter-me logado</label>
+            <a href="/" class="lost-password">Esqueceu sua senha?</a>
           </p>
           <p>
             <input type="submit" class="btn-sub" value="Logar" disabled />
@@ -52,7 +44,17 @@
         </form>
       </div>
 
-      <!--FORMULÁRIO DE CADASTRO-->
+      <section class="lost-password-container">
+        <div class="lost-password-content">
+          <button class="fechar" data-modal="fechar"></button>
+          <form class="lost-password-form">
+            <label for="cpf">Digite seu CPF</label>
+            <input type="text" name="cpf" id="cpf" placeholder="Seu CPF">
+            <p class="error"></p>
+            <input type="submit" class="btn-sub" value="Enviar" />
+          </form>
+        </div>
+      </section>
 
     </div>
   </div>
@@ -60,4 +62,5 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script type="module" src="app/view/assets/js/validations.js"></script>
   <script type="module" src="app/view/assets/js/token/token.js"></script>
+  <script src="app/view/assets/js/updatePassword.js"></script>
 </body>

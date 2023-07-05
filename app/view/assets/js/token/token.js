@@ -2,7 +2,7 @@ const inputSubmit = document.querySelector('.btn-sub');
 const valueInput = inputSubmit.value;
 
 const loading = (loading) => {
-  console.log(inputSubmit);
+  inputSubmit;
   if (!loading) {
     inputSubmit.disabled = false;
     inputSubmit.value = valueInput;
@@ -51,7 +51,7 @@ export const requestTokenRegister = async () => {
   const alerta = document.querySelector('#alerta');
   let json;
 
-  console.log(nome, cpf);
+  nome, cpf;
 
   try {
     loading(true);
@@ -67,7 +67,7 @@ export const requestTokenRegister = async () => {
         senha: senha,
       }),
     });
-    console.log(response);
+    response;
     json = await response.json();
     if (!response.ok) throw new Error(response.status);
     localStorage.setItem('token', json);

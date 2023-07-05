@@ -14,7 +14,8 @@
     "coffeecode/router": "^2.0",
     "vlucas/phpdotenv": "^5.5",
     "simplehtmldom/simplehtmldom": "^2.0@RC",
-    "dompdf/dompdf": "^2.0"
+    "dompdf/dompdf": "^2.0",
+    "phpmailer/phpmailer": "^6.8"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

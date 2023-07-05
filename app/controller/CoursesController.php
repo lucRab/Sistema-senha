@@ -1,17 +1,19 @@
-<?php 
+<?php
+
 namespace App\controller;
+
 use App\model\CoursesModel;
 
-class CoursesController {
-
+class CoursesController
+{
     private static $router = '';
-    public function __construct($router) 
+    public function __construct($router)
     {
         self::$router = $router;
     }
 
 
-    public static function getAllCourses() 
+    public static function getAllCourses()
     {
         $courses = \App\model\CoursesModel::getAllCoursesModel();
         ob_start();
@@ -20,27 +22,36 @@ class CoursesController {
         require_once __DIR__."/../view/courses.php";
     }
 
-    public static function getCourseDays($course) 
+    public static function getCourseDays($course)
     {
         $days = \App\model\CoursesModel::getCourseDaysModel($course);
         return $days;
     }
 
-    public static function getCourseShifts($course, $day) 
+    public static function getCourseShifts($course, $day)
     {
         $shifts = \App\model\CoursesModel::getCourseShiftsModel($course, $day);
         return $shifts;
     }
 
-    public static function getCourse($data) {
+    public static function getCourse($data)
+    {
         $course = strtoupper($data['course']);
         $dataCourse = CoursesModel::getCourseModel($course);
+
         $days = self::getCourseDays($course);
-        if (empty($_SESSION)) self::$router->redirect('/login');
-        if (empty($dataCourse)) self::$router->redirect('/error');
+
+        if (empty($_SESSION)) {
+            self::$router->redirect('/login');
+        }
+        if (empty($dataCourse)) {
+            self::$router->redirect('/error');
+        }
         //Adicionar tela de idade errada
-        if (!sizeof($days)) self::$router->redirect('/historico');
-        
+        if (!sizeof($days)) {
+            self::$router->redirect('/error');
+        }
+
         $src = self::xpathImage($course);
         $firstDay = $days[0]->nome_dia;
         $shifts = self::getCourseShifts($course, $firstDay);
@@ -56,7 +67,7 @@ class CoursesController {
         require_once __DIR__."/../view/course/course.php";
     }
 
-    public static function xpathImage($course) 
+    public static function xpathImage($course)
     {
         $getImage = 0;
         if (str_contains($course, "_")) {

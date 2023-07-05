@@ -71,7 +71,7 @@ function validationsData() {
     validation(event.target);
     const totalInputs = Object.values(elements);
     const inputsValid = totalInputs.filter((element) => element === true);
-    console.log(inputsValid);
+    inputsValid;
     if (inputsValid.length === inputs.length) {
       btn.disabled = false;
     } else {

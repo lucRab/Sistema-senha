@@ -48,7 +48,9 @@
           <li class="nav-item">
             <a class="nav-link nav-link-3" href="historico">Histórico de Senhas</a>
           </li>
-
+          <li class="nav-button">
+            <button class="nav-button nav-link-4" id="sair">Sair</button>
+          </li>
         </ul>
       </div>
     </div>
@@ -66,7 +68,7 @@
   <div class="container-fluid tm-container-content tm-mt-60 d-flex flex-column">
     <div class="row mb-4">
       <h2 class="col-6 tm-text-primary">
-        Turmas Abertas
+        Mais Procurados
       </h2>
     </div>
     <div class="row tm-mb-90 tm-gallery">

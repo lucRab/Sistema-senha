@@ -59,7 +59,7 @@ class Endpoints
         $conxao = Conexao::conectar();
 
         if(gettype($conxao) == "object") {
-            $query = "SELECT a.nome_aluno, a.cod_aluno, a.cpf, a.data_nascimento from aluno a where cpf = :cpf and senha_login = :senha";
+            $query = "SELECT a.nome_aluno, a.email, a.cod_aluno, a.cpf, a.data_nascimento from aluno a where cpf = :cpf and senha_login = :senha";
             $params = [
               'cpf' => $cpf,
               'senha' =>$senha
@@ -68,29 +68,25 @@ class Endpoints
             $dataUser = ValidConnection::isValidConnection($conxao, $query, $params);
 
             $userFound = $dataUser->fetchAll(PDO::FETCH_OBJ);
- 
+
             if (empty($userFound)) {
-              http_response_code(404);
-              echo json_encode("CPF não consta na base de dados");
-              die();
+                http_response_code(404);
+                echo json_encode("CPF ou senha incorretos");
+                die();
             }
-            
-            if ($cpf !== $userFound[0]->cpf) {
-              http_response_code(404);
-              echo json_encode("CPF ou senha incorretos");
-              die();
-            }
-           
+
+
             $birth_date = date_create($userFound[0]->data_nascimento);
             $current_date = date_create(date('Y-m-d'));
             $diff = date_diff($birth_date, $current_date);
-            
+
             $payload = [
-                "exp" => time() + 1000,
+                "exp" => time() + 20 * 60,
                 "iat" => time(),
                 "id_usuario" => $userFound[0]->cod_aluno,
                 "nome" => $userFound[0]->nome_aluno,
                 "cpf" => $userFound[0]->cpf,
+                "email" => $userFound[0]->email,
                 "idade" => $diff->format('%y')
             ];
 
@@ -139,7 +135,7 @@ class Endpoints
             $diff = date_diff($birth_date, $current_date);
 
             $payload = [
-                "exp" => time() + 1000,
+                "exp" => time() + 20 * 60,
                 "iat" => time(),
                 "id_usuario" => $userId,
                 "nome" => $data->nome_aluno,
@@ -153,7 +149,7 @@ class Endpoints
             $_SESSION['cpf'] = $data->cpf;
             $_SESSION['id_usuario'] = $userId;
             $_SESSION['idade'] = $diff->format('%y');
-            
+
             echo json_encode($encode);
         } else {
             if($userId == 2002) {

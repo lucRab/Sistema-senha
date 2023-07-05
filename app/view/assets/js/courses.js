@@ -5,14 +5,14 @@ const elements = content.querySelectorAll('ul li a figcaption');
 const close = document.querySelector('.close');
 const sair = document.querySelector('#sair');
 
-console.log(elements);
+elements;
 
 const logoff = () => {
-  if (confirm("deseja sair desta página?") === true){
-  localStorage.removeItem('token');
-  window.location.replace('http://localhost/Sistema-Senha/login');
+  if (confirm('deseja sair desta página?') === true) {
+    localStorage.removeItem('token');
+    window.location.replace('http://localhost/Sistema-Senha/login');
   }
-}
+};
 
 const handleClick = () => {
   window.scrollTo(0, 0);
@@ -34,7 +34,7 @@ const filterCourses = ({ target }) => {
       parent.style.display = 'block';
     }
   });
-  console.log(target);
+  target;
 };
 
 btn.addEventListener('click', handleClick);

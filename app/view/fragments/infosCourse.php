@@ -1,5 +1,5 @@
 <div>
-  <ul>
+  <ul class="infos-class-content">
     <?php if ($dataCourse[0]->informacoes_curso) { ?>
     <li>
       <p>Informações</p>

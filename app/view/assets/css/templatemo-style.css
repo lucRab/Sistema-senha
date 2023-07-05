@@ -803,6 +803,67 @@ body {
   justify-content: space-between;
 }
 
+.update-email-content {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.update-email-content form {
+  background: white;
+  padding: 60px 40px;
+  border: 10px solid #4bd739;
+  box-shadow: 0 0 0 10px white;
+  position: relative;
+  min-width: 80vw;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.update-email-content p {
+  font-size: 1.2rem;
+}
+
+.update-email-content.active {
+  display: grid;
+}
+
+.update-email-content-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.infos-class-content {
+  padding: 1.5rem 0 !important;
+}
+
+.infos-class-content li p {
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.infos-class-content li p:first-child {
+  font-size: 1.2rem;
+}
+
+#sair {
+  background: #4bd739;
+  border-radius: 4px;
+  border: none;
+  margin: 0.7rem;
+  padding: 0 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+}
+
 @keyframes animationDown {
   from {
     transform: translateY(-40px);
