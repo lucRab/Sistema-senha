@@ -7,11 +7,17 @@ use Dompdf\Options;
 
 class HistoryController
 {
+
+    private static $router;
+
+    public function __construct($router) {
+        self::$router = $router;
+    }
+
     public static function getPasswords()
     {
         $cod_aluno = $_SESSION['id_usuario'];
         $allPasswords = HistoryModel::getPasswordsModel($cod_aluno);
-        var_dump($allPasswords);
         require_once __DIR__."/../view/historyPasswords.php";     
     }
 
@@ -20,14 +26,21 @@ class HistoryController
     {
         $dataRequest = json_decode(file_get_contents('php://input'), true);
         $cod_aluno = $_SESSION['id_usuario'];
-        $cod_senha = 1;
+        $cod_senha = $dataRequest['cod_senha'];
         $deletePassword = HistoryModel::deletePasswordModel($cod_aluno);
         echo json_encode($deletePassword);
     }
 
 
-    public static function downloadPassword()
+    public static function downloadPassword($data)
     {
+        $password = $data['autenticacao'];
+
+        $infosPassword = HistoryModel::downloadPasswordModel($password);
+        if (empty($infosPassword)) {
+            self::$router->redirect('/error');
+        }
+        
         $options = new Options();
         $options->setChroot(__DIR__);
 

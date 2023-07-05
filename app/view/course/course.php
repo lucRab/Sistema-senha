@@ -18,7 +18,9 @@
 </head>
 
 <body>
-  <div class="c-loader"></div>
+  <div class="c-loader-bg">
+    <div class="c-loader"></div>
+  </div>
 
   <!-- Page Loader -->
   <div id="loader-wrapper">
@@ -66,7 +68,7 @@
   <div class="container-fluid tm-container-content tm-mt-60">
     <div class="c-confirm">
       <p>Senha adquirida</p>
-      <a href="">Mais informações</a>
+      <a href="../historico">Mais informações</a>
     </div>
     <div class="row mb-4">
       <h2 class="col-12 tm-text-primary"><?= ucwords(mb_strtolower($dataCourse[0]->nome_curso)) ?></h2>

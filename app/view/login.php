@@ -16,7 +16,9 @@
 </head>
 
 <body>
-  <div class="c-loader"></div>
+  <div class="c-loader-bg">
+    <div class="c-loader"></div>
+  </div>
   <h1 class="gradient">Cidade do Saber</h1>
   <div class="container">
     <div class="content">

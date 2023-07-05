@@ -50,7 +50,10 @@ class Endpoints
         $dotenv->load();
 
         $dataRequest = json_decode(file_get_contents('php://input'), true);
-        $cpf = $dataRequest['cpf'];
+
+        $cpfReplace = preg_replace('/[^0-9]/', '', $dataRequest['cpf']);
+
+        $cpf = $cpfReplace;
         $senha = md5($dataRequest['senha']);
 
         $conxao = Conexao::conectar();
@@ -112,9 +115,11 @@ class Endpoints
 
         $dataRequest = json_decode(file_get_contents('php://input'), true);
 
+        $cpfReplace = preg_replace('/[^0-9]/', '', $dataRequest['cpf']);
+
         $data = new \stdClass();
         $data->nome_aluno = $dataRequest['nome'];
-        $data->cpf = $dataRequest['cpf'];
+        $data->cpf = $cpfReplace;
         $data->data_nascimento = $dataRequest['data_nascimento'];
         $data->senha = md5($dataRequest['senha']);
 

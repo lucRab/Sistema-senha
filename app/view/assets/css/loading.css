@@ -1,3 +1,26 @@
+.c-loader-bg.active {
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-loader {
+  position: relative;
+  box-sizing: border-box;
+  padding: 40px;
+  margin-left: auto;
+  top: 50%;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
 .c-loader.active {
   animation: is-rotating 1s infinite;
   border: 6px solid #e5e5e5;
