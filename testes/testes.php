@@ -45,7 +45,7 @@ $user->email = 'a';
 $user->numero_endereco = '10';
 $user->id = 31;
 
-// var_dump(UserModel::updateUser($conexao, $user));
+// (UserModel::updateUser($conexao, $user));
 // die();
 
 //// VALIDAÇÕES

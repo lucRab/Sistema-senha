@@ -63,6 +63,7 @@ const updateEmail = (email, id_usuario) => {
 };
 
 const requestUpdateEmail = async (emailValue, id_usuario) => {
+  console.log(value);
   try {
     const response = await fetch('http://localhost/Sistema-Senha/login/atualizar/email', {
       method: 'PUT',
@@ -72,12 +73,13 @@ const requestUpdateEmail = async (emailValue, id_usuario) => {
       body: JSON.stringify({ email: emailValue, cod_aluno: id_usuario }),
     });
     json = await response.json();
+    console.log(json);
     if (!response.ok) throw new Error('Sem permissão');
   } catch (error) {
     json = error;
     logoutUser();
   } finally {
-    json;
+    console.log(json);
     return json;
   }
 };

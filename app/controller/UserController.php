@@ -39,6 +39,7 @@ class UserController
 
     public static function getEmail($cpfUser)
     {
+        $cpfUser = preg_replace('/[^0-9]/', '', $cpfUser);
         $email = UserModel::getUserEmail($cpfUser);
         if (empty($email)) {
             http_response_code(404);
@@ -54,7 +55,11 @@ class UserController
         $newEmail = $dataRequest['email'];
         $cod_aluno = $dataRequest['cod_aluno'];
         $update = UserModel::updateEmailModel($cod_aluno, $newEmail);
-        $_SESSION['email'] = $newEmail;
+        try {
+            $_SESSION['email'] = $newEmail;
+        } catch (\Throwable $th) {
+            echo json_encode('Deu erro');
+        }
         echo json_encode('Enviado com sucesso');
         die();
     }
@@ -75,7 +80,8 @@ class UserController
     public static function updateUserPassword()
     {
         $dataRequest = json_decode(file_get_contents('php://input'), true);
-        $cpfUser = $dataRequest['cpf'];
+        $cpfUser = preg_replace('/[^0-9]/', '', $dataRequest['cpf']);
+        
         $newPassword = $dataRequest['newPassword'];
         $mailUser = self::getEmail($cpfUser);
 
