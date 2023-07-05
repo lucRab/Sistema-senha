@@ -3,8 +3,16 @@ const content = document.querySelector('.courses-content');
 const input = document.querySelector('.filter-courses');
 const elements = content.querySelectorAll('ul li a figcaption');
 const close = document.querySelector('.close');
+const sair = document.querySelector('#sair');
 
 console.log(elements);
+
+const logoff = () => {
+  if (confirm("deseja sair desta página?") === true){
+  localStorage.removeItem('token');
+  window.location.replace('http://localhost/Sistema-Senha/login');
+  }
+}
 
 const handleClick = () => {
   window.scrollTo(0, 0);
@@ -32,3 +40,4 @@ const filterCourses = ({ target }) => {
 btn.addEventListener('click', handleClick);
 input.addEventListener('input', filterCourses);
 close.addEventListener('click', closeContent);
+sair.addEventListener('click', logoff);
