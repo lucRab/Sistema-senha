@@ -31,9 +31,18 @@ class HistoryModel {
   }
 
 
-  public static function downloadPasswordModel()
+  public static function downloadPasswordModel($cod_autentication)
   {
+    $conexao = Conexao::conectar();
+    $query = SQL_SELECT_PASSWORD();
+    $cod_aluno = $_SESSION['id_usuario'];
 
+    $params = [
+      "autenticacao" => $cod_autentication,
+      "cod_aluno" => $cod_aluno
+    ];
+    $con = ValidConnection::isValidConnection($conexao, $query, $params);
+    return $con->fetchAll(PDO::FETCH_OBJ);
   }
 
 }
