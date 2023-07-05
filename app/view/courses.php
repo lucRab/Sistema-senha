@@ -48,7 +48,9 @@
           <li class="nav-item">
             <a class="nav-link nav-link-3" href="historico">Histórico de Senhas</a>
           </li>
-
+          <li class = "nav-button">
+            <button class="nav-button" id ="sair" href="login">sair</button>
+          </li>
         </ul>
       </div>
     </div>
