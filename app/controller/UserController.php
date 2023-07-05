@@ -43,7 +43,7 @@ class UserController
         $email = UserModel::getUserEmail($cpfUser);
         if (empty($email)) {
             http_response_code(404);
-            echo json_encode($cpfUser);
+            echo json_encode('Email não encontrado');
             die();
         };
         return $email[0]->email;
