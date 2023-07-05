@@ -281,6 +281,13 @@ a.tm-text-primary:hover {
   font-size: 1.2rem;
 }
 
+.nav-button {
+  color: #fcf6f6;
+  background-color:#4bd739;
+  border: none;
+  font-size: 1.2rem;
+}
+
 .nav-link-1.active,
 .nav-link-1:hover {
   border-color: #4bd739;
@@ -298,7 +305,10 @@ a.tm-text-primary:hover {
 
 .nav-link-4.active,
 .nav-link-4:hover {
+
   border-color: #4bd739;
+  border: none;
+  background-color:#4bd739;
 }
 
 .tm-search-input {
