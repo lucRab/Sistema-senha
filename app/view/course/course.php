@@ -1,3 +1,9 @@
+<?php 
+
+($_SESSION);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

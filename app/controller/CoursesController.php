@@ -69,15 +69,8 @@ class CoursesController
 
     public static function xpathImage($course)
     {
-        $getImage = 0;
-        if (str_contains($course, "_")) {
-            $course = strtolower(str_replace("_", "%20", $course));
-            $getImage = 1;
-        }
-        $httpClient = new \simplehtmldom\HtmlWeb();
-        $response = $httpClient->load("https://www.istockphoto.com/br/search/2/image?ageofpeople=teenager%2Cyoungadult%2Cchild%2Cadult&numberofpeople=two%2Cgroup&orientations=horizontal&phrase=$course&sort=best");
-        $img = $response->find('html body .DW8dMUa97kDDTC1CKQwe picture img')[0]->src;
-        return $img ?: 'https://destaque1.com/wp-content/uploads/2021/08/Cidade-do-Saber-espelhado_Foto-HyagoCerqueira.jpeg';
+        $img = 'https://destaque1.com/wp-content/uploads/2021/08/Cidade-do-Saber-espelhado_Foto-HyagoCerqueira.jpeg';
+        return $img;
     }
 
 }

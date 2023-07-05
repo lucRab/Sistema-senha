@@ -20,7 +20,7 @@ $conexao = Conexao::conectar();
 
 // $teste = new PasswordModel;
 // $teste->alterarPassword($conexao,$pass);
-// var_dump($teste);
+// ($teste);
 //-------------------------------------------------------------------\\
 
 //// PARAM

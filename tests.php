@@ -6,7 +6,7 @@ use App\controller\ClassesController;
 use App\model\UserModel;
 use CoffeeCode\Router\Router;
 
-var_dump('a');
+('a');
 
 $data = new \stdClass;
 $data->nome_aluno = 'ze'; 
@@ -15,4 +15,4 @@ $data->cpf = '123';
 $data->senha = '4343';
 
 $teste = UserModel::createUser($data);
-var_dump($teste);
+($teste);
