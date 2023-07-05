@@ -19,7 +19,7 @@ export function requestDays() {
       body: JSON.stringify({ course: nameCourse, age: '10' }),
     });
     const json = await response.json();
-    console.log(json);
+    json;
     valuesShifts = json;
   };
 

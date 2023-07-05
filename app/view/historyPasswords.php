@@ -35,7 +35,7 @@
 <body>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand gradient" href="index.html">
+      <a class="navbar-brand gradient" href="./">
         <i class="fas fa-film mr-2"></i>
         Cidade do Saber
       </a>
@@ -45,16 +45,14 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link nav-link-1 active" aria-current="page" href="/">Cidade do Saber</a>
+            <a class="nav-link nav-link-1 active" aria-current="page" href="./">Cidade do Saber</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-2" href="videos.html">Prefeitura</a>
+            <a class="nav-link nav-link-2" href="https://www.camacari.ba.gov.br/">Prefeitura</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-3" href="historico">Histórico de Senhas</a>
+            <a class="nav-link nav-link-3" href="./historico">Histórico de Senhas</a>
           </li>
-
-        </ul>
       </div>
     </div>
   </nav>

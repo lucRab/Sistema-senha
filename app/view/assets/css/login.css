@@ -213,6 +213,47 @@ input[type='submit']:hover {
   animation-name: fadeOutLeft;
 }
 
+.lost-password-container {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.lost-password-container.active {
+  display: grid;
+}
+
+.lost-password-container.active .lost-password-content {
+  background: white;
+  padding: 60px 40px;
+  border: 10px solid #4bd739;
+  box-shadow: 0 0 0 10px white;
+  position: relative;
+  min-width: 60vw;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.fechar {
+  width: 50px;
+  height: 50px;
+  border: 4px solid white;
+  border-radius: 50%;
+  background: #e54 url('../imgs/fechar.svg') no-repeat center center;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  cursor: pointer;
+}
+
 /*fadeInLeft*/
 @-webkit-keyframes fadeInLeft {
   0% {

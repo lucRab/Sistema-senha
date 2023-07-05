@@ -1,8 +1,11 @@
 <?php
+
 namespace App\model;
+
 use Core\connection\Conexao;
 use Core\validations\ValidConnection;
 use PDO;
+
 require_once __DIR__."/../../database/sqlClasses.php";
 
 /**
@@ -20,8 +23,9 @@ class PasswordModel
      * @param [Int] $cod_turma
      * @return object
      */
-    public static function passwordOpen($cod_turma) {
-        //Código da função 
+    public static function passwordOpen($cod_turma)
+    {
+        //Código da função
         //recebe o codigo da turma e coloca ele na variavei $params
         $conexao = Conexao::conectar();
         $params = array('cod_turma' => $cod_turma);
@@ -45,8 +49,9 @@ class PasswordModel
      * @param [object] $data
      * @return object
      */
-    public static function userPassword($data) {
-    //Código da função
+    public static function userPassword($data)
+    {
+        //Código da função
         //recebe o codigo do aluno e coloca ele na variavei $params
         $conexao = Conexao::conectar();
         $params = array('cod_aluno' => $data->cod_aluno );
@@ -65,8 +70,9 @@ class PasswordModel
      * @param [object] $data
      * @return object
      */
-    public static function alterarPassword($data) {
-    //Código da função
+    public static function alterarPassword($data)
+    {
+        //Código da função
         //recebe os dados e coloca eles na variavei $params
         $conexao = Conexao::conectar();
         $params = array(

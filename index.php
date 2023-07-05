@@ -4,6 +4,10 @@ use App\controller\UserController;
 use App\controller\CoursesController;
 use App\controller\ClassesController;
 use CoffeeCode\Router\Router;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 
 session_start();
 
@@ -43,6 +47,9 @@ $router->group('login');
 $router->get("/", "UserController:userLogin");
 $router->get("/cadastro", "UserController:createUser");
 $router->post("/", "UserController:createUser");
+$router->put("/atualizar", "UserController:updatePassword");
+$router->put("/atualizar/email", "UserController:updateEmail");
+$router->put("/atualizar/senha", "UserController:updateUserPassword");
 
 /* 
   Endpoints

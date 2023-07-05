@@ -1,8 +1,11 @@
 <?php
+
 namespace App\model;
+
 use Core\connection\Conexao;
 use Core\validations\ValidConnection;
 use PDO;
+
 require_once __DIR__."/../../database/sqlClasses.php";
 
 class CoursesModel
@@ -25,7 +28,8 @@ class CoursesModel
         return $allCourses;
     }
 
-    public static function getCourseDaysModel($course, $condition = null) {
+    public static function getCourseDaysModel($course, $condition = null)
+    {
         $conexao = Conexao::conectar();
         $query = SQL_AVAILABLE_COURSE_DAYS($condition);
         $params = [
@@ -37,7 +41,8 @@ class CoursesModel
         return $dataDays;
     }
 
-    public static function getCourseShiftsModel($course, $day) {
+    public static function getCourseShiftsModel($course, $day)
+    {
         $conexao = Conexao::conectar();
         $query = SQL_AVAILABLE_SHIFT_DAYS();
         $params = [
@@ -50,11 +55,13 @@ class CoursesModel
         return $dataShifts;
     }
 
-    public static function getCourseModel($course) {
+    public static function getCourseModel($course)
+    {
         $conexao = Conexao::conectar();
         $query = SQL_SELECT_COURSE();
         $params = [
-            "nome_curso" => $course
+            "nome_curso" => $course,
+            "idade" => $_SESSION['idade']
         ];
         $con = validConnection::isValidConnection($conexao, $query, $params);
         $dataCourse = $con->fetchAll(PDO::FETCH_OBJ);

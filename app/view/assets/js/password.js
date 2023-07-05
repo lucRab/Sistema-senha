@@ -57,6 +57,7 @@ export default function requestClass() {
 
   const updatePassword = async (cod_senha) => {
     loading(true);
+    const total = document.querySelector('.total-senhas');
     try {
       const response = await fetch('http://localhost/Sistema-Senha/json/senha', {
         method: 'POST',
@@ -68,11 +69,13 @@ export default function requestClass() {
       const json = await response.json();
       if (!response.ok) throw new Error('Erro ao retirar senha');
       confirmRequest.classList.add('active');
+      const num = +total.innerText.split(':')[1];
+      total.innerText = `Total de senhas: ${(num - 1).toString()}`;
     } catch (error) {
       confirmRequest.classList.add('active');
       confirmRequest.style.background = '#e54';
       confirmRequest.innerText = 'Erro ao retirar senha';
-      console.log(error);
+      error;
     } finally {
       loading(false);
       clearTimeout(timeout);

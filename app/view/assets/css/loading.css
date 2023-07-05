@@ -1,4 +1,9 @@
+.c-loader-bg {
+  display: none;
+}
+
 .c-loader-bg.active {
+  display: block;
   height: 100vh;
   width: 100%;
   background: rgba(0, 0, 0, 0.5);

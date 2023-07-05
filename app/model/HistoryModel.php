@@ -19,12 +19,13 @@ class HistoryModel {
   }
 
 
-  public static function deletePasswordModel($cod_aluno)
+  public static function deletePasswordModel($cod_aluno, $cod_senha)
   {
     $conexao = Conexao::conectar();
     $query = SQL_DELETE_PASSWORD();
     $params = [
-      "cod_aluno" => $cod_aluno
+      "cod_aluno" => $cod_aluno,
+      "cod_senha" => $cod_senha
     ];
     $con = ValidConnection::isValidConnection($conexao, $query, $params);
     return $con->fetchAll(PDO::FETCH_OBJ);

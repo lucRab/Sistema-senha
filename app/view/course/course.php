@@ -1,9 +1,3 @@
-<?php 
-
-  var_dump($_SESSION);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +26,7 @@
   </div>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand gradient" href="index.html">
+      <a class="navbar-brand gradient" href="../">
         <i class="fas fa-film mr-2"></i>
         Cidade do Saber
       </a>
@@ -42,28 +36,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">Cidade do Saber</a>
+            <a class="nav-link nav-link-1 active" aria-current="page" href="../">Cidade do Saber</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-2" href="videos.html">Prefeitura</a>
+            <a class="nav-link nav-link-2" href="https://www.camacari.ba.gov.br/">Prefeitura</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-3" href="historico">Histórico de Senhas</a>
+            <a class="nav-link nav-link-3" href="../historico">Histórico de Senhas</a>
           </li>
 
         </ul>
       </div>
     </div>
   </nav>
-
-  <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg">
-    <form class="d-flex tm-search-form">
-      <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success tm-search-btn" type="submit">
-        <i class="fas fa-search"></i>
-      </button>
-    </form>
-  </div>
 
   <div class="container-fluid tm-container-content tm-mt-60">
     <div class="c-confirm">
@@ -82,6 +67,7 @@
 
           <?= $fragment ?>
           <button id="btn" class="btn btn-primary tm-btn-big">Retirar Senha</button>
+          <p class="total-senhas">Total de senhas: <?= $dataCourse[0]->total_senhas ?></p>
           <div class="error"></div>
 
         </div>
@@ -90,7 +76,7 @@
     <?= $infosCourse ?>
     <div class="row mb-4">
       <h2 class="col-12 tm-text-primary">
-        Related Photos
+        Mais cursos
       </h2>
     </div>
     <div class="row mb-3 tm-gallery">
@@ -112,7 +98,7 @@
           <img src="../app/view/assets/imgs/img-02.jpg" alt="Image" class="img-fluid">
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Natação</h2>
-            <a href="natacao.html">View more</a>
+            <a href="natacao_escolinha">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -125,7 +111,7 @@
           <img src="../app/view/assets/imgs/img-03.png" alt="Image" class="img-fluid">
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Inglês</h2>
-            <a href="ingles.html">View more</a>
+            <a href="ingles">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -138,7 +124,7 @@
           <img src="../app/view/assets/imgs/img-04.jpg" alt="Image" class="img-fluid">
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Canto</h2>
-            <a href="canto.html">View more</a>
+            <a href="canto">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -151,7 +137,7 @@
           <img src="../app/view/assets/imgs/img-05.jpg" alt="Image" class="img-fluid">
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Teclado</h2>
-            <a href="teclado.html">View more</a>
+            <a href="teclado">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -164,7 +150,7 @@
           <img src="../app/view/assets/imgs/img-06.jpg" alt="Image" class="img-fluid">
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Ballet</h2>
-            <a href="ballet.html">View more</a>
+            <a href="ballet">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -177,7 +163,7 @@
           <img src="../app/view/assets/imgs/img-07.jpg" alt="Image" class="img-fluid">
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Robótica</h2>
-            <a href="robotica.html">View more</a>
+            <a href="robotica_lego">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -190,7 +176,7 @@
           <img src="../app/view/assets/imgs/img-08.jpg" alt="Image" class="img-fluid">
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Pilates</h2>
-            <a href="pilates.html">View more</a>
+            <a href="pilates">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -223,6 +209,19 @@
       </div>
     </div>
   </footer>
+
+  <?php if (!isset($_SESSION['email']) || empty($_SESSION['email'])): ?>
+  <div class="update-email-content">
+    <form>
+      <p>Caso esqueça sua senha, adicione um email válido para entrarmos em contato</p>
+      <div class="update-email-content-inputs">
+        <input type="text" name="email" id="email">
+        <input type="submit" class="btn btn-success btn-sm rounded" value="Confirmar" placeholder="Sua email">
+      </div>
+    </form>
+  </div>
+  <?php endif; ?>
+
 
   <script src="../app/view/assets/js/token/authToken.js"></script>
   <script type="module" src="../app/view/assets/js/script.js"></script>
